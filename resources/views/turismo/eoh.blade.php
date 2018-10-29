@@ -161,10 +161,12 @@ $.getJSON('/getHotels/'+muni_id,function(data){
     $(o).html('Seleccione Alojamiento');
             $("#hotelOption").append(o);
     data.forEach(function(item){
-                var o = new Option(item.denominacion, item.id);
+            var o = new Option(item.denominacion, item.id);
             /// jquerify the DOM object 'o' so we can use the html method
             $(o).html(item.denominacion);
             $("#hotelOption").append(o);
+
+
     })
     $("#hotelOption").selectpicker();
 })
