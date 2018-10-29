@@ -13,7 +13,7 @@ class hotel extends Model
         $values = explode(';',$string);
 
             $this->zona = $values[0];
-            $this->localidad = $values[1];
+            $this->municipio_id = $values[1];
             $this->categoria = $values[2];
             $this->denominacion = $values[3];
             $this->habitacion = $values[4];

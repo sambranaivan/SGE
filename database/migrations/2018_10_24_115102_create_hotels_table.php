@@ -17,6 +17,7 @@ class CreateHotelsTable extends Migration
             $table->increments('id');
             $table->string('zona')->nullable();
             $table->unsignedInteger('municipio_id');
+            $table->foreign('municipio_id')->references('municipio_id')->on('municipios');
             $table->string('categoria')->nullable();
             $table->string('denominacion')->nullable();
             $table->string('habitacion')->nullable();
