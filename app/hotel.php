@@ -34,4 +34,9 @@ class hotel extends Model
             $this->save();
 
     }
+
+    public function municipio()
+    {
+        return $this->belongsTo('App\municipio','municipio_id','municipio_id');
+    }
 }

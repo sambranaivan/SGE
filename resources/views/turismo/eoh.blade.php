@@ -33,7 +33,7 @@
                           <select class="form-control selectpicker" name="hotel" id="frm_hotel" data-show-subtext="true" data-live-search="true" required>
                             <option selected disabled>Seleccionar Alojamiento</option>
                             @foreach ($hoteles as $h)
-                                <option data-subtext="{{$h->localidad}}" value="{{$h->id}}" plazas="{{$h->plazas}}"
+                                <option data-subtext="{{$h->municipio->nombre}}" value="{{$h->id}}" plazas="{{$h->plazas}}"
                                     >{{$h->denominacion}}</option>
                             @endforeach
                           </select>

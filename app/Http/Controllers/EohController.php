@@ -12,7 +12,7 @@ class EohController extends Controller
     // turismo branch
 public function index(){
 
-    $h = Hotel::orderBy('zona')->orderby('localidad')->get();
+    $h = Hotel::orderBy('zona')->orderby('municipio_id')->get();
     return view('turismo.eoh')->with('hoteles',$h);
 }
 public function save(Request $request)
