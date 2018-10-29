@@ -1,9 +1,9 @@
 @extends('layouts.app')
 {{--  Listado de Encuestas  --}}
 @section('content')
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    {{--  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
-    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>  --}}
 <div class="container">
 
 @if (session()->has('mensaje'))
@@ -28,7 +28,7 @@
 
                     @csrf
 
-                        <div class="form-group">
+                        {{--  <div class="form-group">
                           <label for="hotel">Alojamiento</label>
                           <select class="form-control selectpicker" name="hotel" id="frm_hotel" data-show-subtext="true" data-live-search="true" required>
                             <option selected disabled>Seleccionar Alojamiento</option>
@@ -38,7 +38,27 @@
                             @endforeach
                           </select>
                           <label for="" id="plazas"></label>
+                        </div>  --}}
+                        <div class="form-group" id="DivMunicipo">
+                          <label for="municipio">Municipio</label>
+                          <select onchange="updateMunicipio(this.value)" class="form-control" name="municipio" id="municipioOption" data-live-search="true" required>
+                            <option selected disabled>Seleccione Municipio</option>
+                            @foreach ($municipios as $m)
+                                <option value="{{$m->id}}">{{$m->nombre}}</option>
+                            @endforeach
+                          </select>
                         </div>
+
+
+                        {{--  hago un combo por cada municipio? y muesto cada uno cuando se elija?  --}}
+
+                        <div class="form-group" id="divHotel">
+
+                        </div>
+
+
+
+
                         <div class="form-group">
                           <label for="">Plazas Totales</label>
                           <input type="number" name="plazas" id="" class="form-control" placeholder="" aria-describedby="helpId">
@@ -105,11 +125,11 @@
         </div>
     </div>
 </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    {{--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"> </script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"> </script>  --}}
   <script>
 Date.prototype.toDateInputValue = (function() {
     var local = new Date(this);
@@ -123,8 +143,50 @@ function addDays(date, days) {
   return result;
 }
 
-    $(function(){
 
+
+function updateMunicipio(muni_id)
+{
+
+var div = $("#divHotel").html("");
+div.append('<label for="hotel">Alojamiento</label>')
+div.append('<select id="hotelOption" onchange="updateHotel(this.value)" class="form-control" name="hotel" data-live-search="true" required>')
+//div.append('<option selected disabled>Seleccione Alojamiento</option>')
+div.append('</select>');
+
+$.getJSON('/getHotels/'+muni_id,function(data){
+    console.log(data);
+    var o = new Option('Seleccione Alojamiento','')
+    $(o).attr('disabled');
+    $(o).html('Seleccione Alojamiento');
+            $("#hotelOption").append(o);
+    data.forEach(function(item){
+                var o = new Option(item.denominacion, item.id);
+            /// jquerify the DOM object 'o' so we can use the html method
+            $(o).html(item.denominacion);
+            $("#hotelOption").append(o);
+    })
+    $("#hotelOption").selectpicker();
+})
+
+div.append('<label id="plazasLabel"></label>')
+div.show();
+}
+
+function updateHotel(hotel_id)
+{
+
+    $.getJSON('/getHotel/'+hotel_id,function(data){
+
+        $("#plazasLabel").html('Plazas Totales: '+data.plazas);
+
+    })
+}
+
+
+    $(function(){
+            //ready
+            $("#municipioOption").selectpicker();
         ///prevent enter submit
         $(window).keydown(function(event){
     if(event.keyCode == 13) {
@@ -132,6 +194,9 @@ function addDays(date, days) {
       return false;
     }
   });
+
+
+
 
 
 

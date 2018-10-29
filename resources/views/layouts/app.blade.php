@@ -12,7 +12,11 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/jquery.js') }}" ></script>
-    <script src="{{ asset('js/jquery.table2excel.min.js') }}" defer></script>
+    <script src="{{ asset('js/jquery.table2excel.min.js')}}" defer></script>
+    <script type="text/javascript" src="{{asset('js/picker.min.js')}}" defer></script>
+    <script type="text/javascript" src="{{asset('js/bootstrap-select.min.js')}}" defer></script>
+    <link rel="stylesheet" href="{{asset('css/picker.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/bootstrap-select.min.css')}}">
 
 
     <!-- Fonts -->

@@ -38,3 +38,8 @@ Route::post('turismo/eoh','eohController@save');
 Route::get('turismo/eoh/confirmar/{id}',"eohController@confirmar");
 Route::get('turismo/eoh/cancelar/{id}',"eohController@cancel");
 Route::get('turismo/eoh/detalle','eohController@show');
+
+
+//test
+Route::get('getHotels/{id}','municipioController@getHotels');
+Route::get('getHotel/{id}','hotelController@getHotel');

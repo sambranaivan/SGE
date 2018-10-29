@@ -21,5 +21,12 @@ class municipio extends Model
             $this->save();
 
     }
+     public function hoteles()
+    {
+        return $this->hasMany('App\hotel','municipio_id','municipio_id');
+    }
+
+
+
 
 }

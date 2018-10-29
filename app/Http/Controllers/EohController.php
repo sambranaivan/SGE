@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\eoh;
 use App\hotel;
+use App\municipio;
 use App\eoh_value;
 class EohController extends Controller
 {
@@ -12,8 +13,9 @@ class EohController extends Controller
     // turismo branch
 public function index(){
 
-    $h = Hotel::orderBy('zona')->orderby('municipio_id')->get();
-    return view('turismo.eoh')->with('hoteles',$h);
+    // $h = Hotel::orderBy('zona')->orderby('municipio_id')->get();
+    $m = Municipio::all();
+    return view('turismo.eoh')->with('municipios',$m);
 }
 public function save(Request $request)
 {
