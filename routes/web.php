@@ -33,13 +33,13 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // turismo branch
-Route::get('turismo/eoh','eohController@index');
-Route::post('turismo/eoh','eohController@save');
-Route::get('turismo/eoh/confirmar/{id}',"eohController@confirmar");
-Route::get('turismo/eoh/cancelar/{id}',"eohController@cancel");
-Route::get('turismo/eoh/detalle','eohController@show');
+Route::get('turismo/eoh','EohController@index');
+Route::post('turismo/eoh','EohController@save');
+Route::get('turismo/eoh/confirmar/{id}',"EohController@confirmar");
+Route::get('turismo/eoh/cancelar/{id}',"EohController@cancel");
+Route::get('turismo/eoh/detalle','EohController@show');
 
 
 //test
-Route::get('getHotels/{id}','municipioController@getHotels');
-Route::get('getHotel/{id}','hotelController@getHotel');
+Route::get('getHotels/{id}','MunicipioController@getHotels');
+Route::get('getHotel/{id}','HotelController@getHotel');
