@@ -11,7 +11,7 @@
                     <ul class="list-group list-group-flush">
                             <li class="list-group-item list-group-item-primary text-center">Encuesta <b>#{{$encuesta->id}}</b></li>
                             <li class="list-group-item"><b>Zona</b>:{{$encuesta->hotel->zona}}</li>
-                            <li class="list-group-item"><b>Localidad</b>: {{$encuesta->hotel->localidad}}</li>
+                            <li class="list-group-item"><b>Localidad</b>: {{$encuesta->hotel->municipio->nombre}}</li>
                             <li class="list-group-item"><b>Categoría</b>: {{$encuesta->hotel->categoria}}</li>
                             <li class="list-group-item"><b>Denominación</b>: {{$encuesta->hotel->denominacion}}
                                 <a href="#">

@@ -92,7 +92,7 @@
 
 
                                 <td>{{$item->hotel->zona}}</td>
-                                <td>{{$item->hotel->localidad}}</td>
+                                <td>{{$item->hotel->municipio->nombre}}</td>
                                 <td>{{$item->hotel->categoria}}</td>
                                 <td>{{$item->hotel->denominacion}}</td>
 
