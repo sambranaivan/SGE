@@ -18,8 +18,12 @@
                                     <i class="fas fa-eye"></i>
                                 </a>
                             </li>
-                            <li class="list-group-item"><b>Plazas Totales</b>: {{$encuesta->plazas}}</li>
-                            <li class="list-group-item"><b>Reservas Totales</b>: {{$encuesta->reservas}}</li>
+                            <li class="list-group-item"><b>Plazas Totales</b>: {{$encuesta->hotel->plazas}}</li>
+                            @if($encuesta->reservas)
+
+                                <li class="list-group-item"><b>Reservas Totales</b>: {{$encuesta->reservas}}</li>
+
+                            @endif
 
                         {{--  aca empieza el has de los dias---siempre va a tener 3 minimo  --}}
                             @foreach ($encuesta->valores as $dia)

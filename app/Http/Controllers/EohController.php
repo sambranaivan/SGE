@@ -27,7 +27,7 @@ public function save(Request $request)
     $e->desde = $request->desde;
     $e->hasta = $request->hasta;
     $e->hotel_id = $request->hotel;
-    $e->plazas = $request->plazas;
+    // $e->plazas = $request->plazas;
     $e->reservas = $request->reservas;
     $e->save();
 

@@ -20,8 +20,8 @@ class CreateEohsTable extends Migration
             $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
             $table->date('desde');
             $table->date('hasta');
-            $table->integer('plazas');
-            $table->integer('reservas');
+            // $table->integer('plazas')->nullable();
+            $table->integer('reservas')->nullable();
             //
 
 

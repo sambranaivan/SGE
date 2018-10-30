@@ -96,7 +96,7 @@
                                 <td>{{$item->hotel->categoria}}</td>
                                 <td>{{$item->hotel->denominacion}}</td>
 
-                                <td>{{$item->plazas}}</td>
+                                <td>{{$item->hotel->plazas}}</td>
                                 <td>{{$item->reservas}}</td>
                                 @foreach ($item->valores as $dia)
                                 <td>
