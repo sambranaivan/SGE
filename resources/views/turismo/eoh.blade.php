@@ -244,7 +244,7 @@ function updateHotel(hotel_id)
                 var t = '<tr>'
                     t +='<td scope="row">'+fecha+'</td>'
                     t +='<td><input name="plaza_'+i+'" type="number" min="0" class="form-control max_dia" max="'+max+'"  required></td>'
-                    t +='<td><input name="porcentaje_'+i+'" type="number" min="0" class="form-control" required></td>'
+                    t +='<td><input name="porcentaje_'+i+'" type="number" min="0" max="100" class="form-control" required></td>'
                     t +='</tr>'
                     t +='<input type="hidden" name="fecha_'+i+'" value="'+dbfecha+'">'
                     t +='<input type="hidden" name="day_'+i+'" value="'+inicio.getDay()+'">'

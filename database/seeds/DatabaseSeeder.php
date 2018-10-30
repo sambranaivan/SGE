@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
 
     private function crearHoteles()
     {
-    $hoteles = 'Gran Corrientes;15;ALQUILERES TEMPORARIOS;REFUGIO GUARANI (Dpto.);2;3;González, María Concepción ;3794-594378;España 698;nariacgonzalez13@hotmail.com;;;;;;;C/R;;1034/15;**
+    $hoteles = '
+        Gran Corrientes;15;ALQUILERES TEMPORARIOS;REFUGIO GUARANI (Dpto.);2;3;González, María Concepción ;3794-594378;España 698;nariacgonzalez13@hotmail.com;;;;;;;C/R;;1034/15;**
         Gran Corrientes;15;ALQUILERES TEMPORARIOS;ANIBAL GUILLERMO TOSETTI (Casa);;;Tosetti, Aníbal Guillermo;3794-702030;Mendoza 670;;;;;;;;S/D;;;**
         Gran Corrientes;15;APART HOTEL;LA ROZADA APART HOTEL;20;60;Lischinsky, Pablo;4433001/44824913;Plácido Martínez 1223;;www.larozada.com;La Rozada Suites;;;;;A/C;3;972/14;**
         Gran Corrientes;15;APART HOTEL;DON SUITES APART HOTEL;27;62;T. de Lorenzo, María Luisa;4423433/154670049;La Rioja 442;lucia@donsuites.com.ar / info@donsuite.com.ar;www.donsuites.com;Don Suites Apart Hotel;;;;;A/C;3;451/12;**
