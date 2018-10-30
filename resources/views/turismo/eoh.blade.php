@@ -59,15 +59,30 @@
 
 
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                           <label for="">Plazas Totales</label>
-                          <input type="number" name="plazas" id="frm_plazas" class="form-control" placeholder="" aria-describedby="helpId">
-                        </div>
+                          <input type="number" name="plazas" id="frm_plazas" class="form-control" placeholder="" aria-describedby="helpId" disabled>
+                        </div> --}}
+
+
+                        {{-- TIPO DE CONSULTA --}}
                         <div class="form-group">
-                          <label for="">Reservas Totales</label>
-                          <input type="number" name="reservas" id="" class="form-control" placeholder="" aria-describedby="helpreservas">
-                           <small id="helpreservas" class="text-muted">Del fin de semana relevado</small>
+                            <label for="tipo">Consulta por: </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="tipo" id="checkReserva" value="reserva" required> Reservas
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="tipo" id="checkOcupacion" value="ocupacion"> Ocupacion
+                                </label>
+                            </div>
+
+
                         </div>
+
+                        {{-- FECHAS --}}
                         <h3 class="text-muted text-center">Fechas del relevamiento</h3>
                         <div class="form-group">
                             <div class="row">
@@ -92,23 +107,21 @@
                             </div>
                         </div>
 
-                        <div class="form-group" id="campos" style="display:none">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Día</th>
-                                        <th>Plazas Ocupadas</th>
-                                        <th>Porcentaje de Ocupación</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="cbody">
-
-
-
-                                </tbody>
-                            </table>
-                            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                        <div class="form-group" id="reservas" style="display:none">
+                          <label for="">Reservas Totales</label>
+                          <input type="number" name="reservas" id="frm_reserva" class="form-control" placeholder="" aria-describedby="helpId">
                         </div>
+
+
+                        <div class="form-group" id="campos" style="display:none">
+
+
+                        </div>
+                         <div class="form-group" id="send">
+                            <button type="submit" class="btn btn-primary btn-block" id="submit">Enviar</button>
+                        </div>
+
+
                         <div class="alert alert-danger" id="alert_fechas" role="alert" style="display:none";>
                           <h4 class="alert-heading">Error, el rango de fechas debe ser entre 3 y 5 días</h4>
                           <p></p>
@@ -181,7 +194,7 @@ function updateHotel(hotel_id)
     $.getJSON('/getHotel/'+hotel_id,function(data){
 
         $("#plazasLabel").html('Plazas Totales: '+data.plazas);
-        $("#frm_plazas").attr("max",data.plazas)
+        //$("#frm_plazas").val(data.plazas)
          $(".max_dia").attr("max",data.plazas)
 
     })
@@ -207,25 +220,60 @@ function updateHotel(hotel_id)
 
 
         var campos = $("#campos");
+        var reservas = $("#reservas");
         var alerta = $("#alert_fechas");
 
 
         // $('.fechas').val(new Date().toDateInputValue());
 
+        $('input:radio[name=tipo]').change(function(){
+            switch($(this).val())
+            {
+                case 'reserva':
+                 reservas.show();
+                campos.hide();
+                campos.html("")
+                break;
+                case 'ocupacion':
+                 reservas.hide();
+                campos.html('<table class="table"><thead><tr><th>Día</th><th>Plazas Ocupadas</th><th>Porcentaje de Ocupación</th></tr></thead><tbody id="cbody"></tbody> </table>')
+                 campos.show();
+                break;
+            }
+        })
+
         $("#hasta").change(function(){
 
-            var dias = diferencia();
-            if(validarFechas(dias))
+            var tipo = $('input:radio[name=tipo]:checked').val();
+
+            switch(tipo)
             {
-                crearCampos(dias)
-                campos.show();
-                alerta.hide();
+                case 'reserva':
+                reservas.show();
+                break;
+                case 'ocupacion':
+                var dias = diferencia();
+                        if(validarFechas(dias))
+                        {
+                            crearCampos(dias)
+                            campos.show();
+                            alerta.hide();
+                            reservas.hide();
+                        }
+                        else
+                        {
+                            campos.hide();
+                            alerta.show();
+                            reservas.hide();
+                        }
+                break;
+
             }
-            else
-            {
-                campos.hide();
-                alerta.show();
-            }
+
+
+
+
+
 
         })
 
