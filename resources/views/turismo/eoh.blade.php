@@ -182,6 +182,7 @@ function updateHotel(hotel_id)
 
         $("#plazasLabel").html('Plazas Totales: '+data.plazas);
         $("#frm_plazas").attr("max",data.plazas)
+         $(".max_dia").attr("max",data.plazas)
 
     })
 }
@@ -235,13 +236,14 @@ function updateHotel(hotel_id)
             var i = 0;
             for (i = 0; i < dias; i++)
             {
+                max =   $("#frm_plazas").attr("max")
                 console.log(inicio)
                 inicio = addDays(inicio,1);
                 fecha = inicio.getDate()+"/"+(inicio.getMonth()+1)+"/"+inicio.getFullYear();
                 dbfecha = inicio.getFullYear()+"/"+(inicio.getMonth()+1)+"/"+inicio.getDate();
                 var t = '<tr>'
                     t +='<td scope="row">'+fecha+'</td>'
-                    t +='<td><input name="plaza_'+i+'" type="number" min="0" class="form-control" required></td>'
+                    t +='<td><input name="plaza_'+i+'" type="number" min="0" class="form-control max_dia" max="'+max+'"  required></td>'
                     t +='<td><input name="porcentaje_'+i+'" type="number" min="0" class="form-control" required></td>'
                     t +='</tr>'
                     t +='<input type="hidden" name="fecha_'+i+'" value="'+dbfecha+'">'
