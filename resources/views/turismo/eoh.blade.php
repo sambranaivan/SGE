@@ -61,7 +61,7 @@
 
                         <div class="form-group">
                           <label for="">Plazas Totales</label>
-                          <input type="number" name="plazas" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                          <input type="number" name="plazas" id="frm_plazas" class="form-control" placeholder="" aria-describedby="helpId">
                         </div>
                         <div class="form-group">
                           <label for="">Reservas Totales</label>
@@ -71,22 +71,22 @@
                         <h3 class="text-muted text-center">Fechas del relevamiento</h3>
                         <div class="form-group">
                             <div class="row">
-                             <div class="col-md-6">
+                             <div class="col-md-12">
                                  <label for="desde">Inicio</label>
                                  <input type="date" name="desde" id="desde" class="form-control fechas" placeholder="" aria-describedby="helpDesde">
                                  <small id="helpDesde" class="text-muted">Inicio del relevamiento</small>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
 
                                     <label for="hasta">Fin</label>
                                     <input type="date" name="hasta" id="hasta" class="form-control fechas" placeholder="" aria-describedby="helphasta">
-                                    <small id="helphasta" class="text-muted">Inicio del relevamiento</small>
+                                    <small id="helphasta" class="text-muted">Fin del relevamiento</small>
                                 </div>
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <a class="from-control btn btn-block btn-success text-center" href="#" id="confirmarFechas">
                                         Confirmar Fechas
                                     </a>
-                                </div>
+                                </div> --}}
 
 
                             </div>
@@ -148,31 +148,31 @@ function addDays(date, days) {
 function updateMunicipio(muni_id)
 {
 
-var div = $("#divHotel").html("");
-div.append('<label for="hotel">Alojamiento</label>')
-div.append('<select id="hotelOption" onchange="updateHotel(this.value)" class="form-control" name="hotel" data-live-search="true" required>')
-//div.append('<option selected disabled>Seleccione Alojamiento</option>')
-div.append('</select>');
+            var div = $("#divHotel").html("");
+            div.append('<label for="hotel">Alojamiento</label>')
+            div.append('<select id="hotelOption" onchange="updateHotel(this.value)" class="form-control" name="hotel" data-live-search="true" required>')
+            //div.append('<option selected disabled>Seleccione Alojamiento</option>')
+            div.append('</select>');
 
-$.getJSON('/getHotels/'+muni_id,function(data){
-    console.log(data);
-    var o = new Option('Seleccione Alojamiento','')
-    $(o).attr('disabled');
-    $(o).html('Seleccione Alojamiento');
-            $("#hotelOption").append(o);
-    data.forEach(function(item){
-            var o = new Option(item.denominacion, item.id);
-            /// jquerify the DOM object 'o' so we can use the html method
-            $(o).html(item.denominacion);
-            $("#hotelOption").append(o);
+            $.getJSON('/getHotels/'+muni_id,function(data){
+                console.log(data);
+                var o = new Option('Seleccione Alojamiento','')
+                $(o).attr('disabled');
+                $(o).html('Seleccione Alojamiento');
+                        $("#hotelOption").append(o);
+                data.forEach(function(item){
+                        var o = new Option(item.denominacion, item.id);
+                        /// jquerify the DOM object 'o' so we can use the html method
+                        $(o).html(item.denominacion);
+                        $("#hotelOption").append(o);
 
 
-    })
-    $("#hotelOption").selectpicker();
-})
+                })
+                $("#hotelOption").selectpicker();
+                })
 
-div.append('<label id="plazasLabel"></label>')
-div.show();
+            div.append('<label id="plazasLabel"></label>')
+            div.show();
 }
 
 function updateHotel(hotel_id)
@@ -181,11 +181,15 @@ function updateHotel(hotel_id)
     $.getJSON('/getHotel/'+hotel_id,function(data){
 
         $("#plazasLabel").html('Plazas Totales: '+data.plazas);
+        $("#frm_plazas").attr("max",data.plazas)
+         $(".max_dia").attr("max",data.plazas)
 
     })
 }
 
-
+////////////////////////////////////
+////////READY//////////////////
+////////////////////////////////////
     $(function(){
             //ready
             $("#municipioOption").selectpicker();
@@ -206,9 +210,9 @@ function updateHotel(hotel_id)
         var alerta = $("#alert_fechas");
 
 
-         $('.fechas').val(new Date().toDateInputValue());
+        // $('.fechas').val(new Date().toDateInputValue());
 
-        $("#confirmarFechas").click(function(){
+        $("#hasta").change(function(){
 
             var dias = diferencia();
             if(validarFechas(dias))
@@ -232,14 +236,15 @@ function updateHotel(hotel_id)
             var i = 0;
             for (i = 0; i < dias; i++)
             {
+                max =   $("#frm_plazas").attr("max")
                 console.log(inicio)
                 inicio = addDays(inicio,1);
                 fecha = inicio.getDate()+"/"+(inicio.getMonth()+1)+"/"+inicio.getFullYear();
                 dbfecha = inicio.getFullYear()+"/"+(inicio.getMonth()+1)+"/"+inicio.getDate();
                 var t = '<tr>'
                     t +='<td scope="row">'+fecha+'</td>'
-                    t +='<td><input name="plaza_'+i+'" type="number" min="0" class="form-control" required></td>'
-                    t +='<td><input name="porcentaje_'+i+'" type="number" min="0" class="form-control" required></td>'
+                    t +='<td><input name="plaza_'+i+'" type="number" min="0" class="form-control max_dia" max="'+max+'"  required></td>'
+                    t +='<td><input name="porcentaje_'+i+'" type="number" min="0" max="100" class="form-control" required></td>'
                     t +='</tr>'
                     t +='<input type="hidden" name="fecha_'+i+'" value="'+dbfecha+'">'
                     t +='<input type="hidden" name="day_'+i+'" value="'+inicio.getDay()+'">'

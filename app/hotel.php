@@ -17,7 +17,8 @@ class hotel extends Model
             $this->categoria = $values[2];
             $this->denominacion = $values[3];
             $this->habitacion = $values[4];
-            $this->plazas = $values[5];
+            $plaza = $values[5] == ''? null:$values[5];
+            $this->plazas = $plaza;
             $this->titular = $values[6];
             $this->telefono = $values[7];
             $this->direccion = $values[8];
