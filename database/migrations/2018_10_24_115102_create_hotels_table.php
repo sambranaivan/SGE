@@ -21,7 +21,7 @@ class CreateHotelsTable extends Migration
             $table->string('categoria')->nullable();
             $table->string('denominacion')->nullable();
             $table->string('habitacion')->nullable();
-            $table->string('plazas')->nullable();
+            $table->integer('plazas')->nullable();
             $table->string('titular')->nullable();
             $table->string('telefono')->nullable();
             $table->string('direccion')->nullable();
