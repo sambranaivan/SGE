@@ -10,7 +10,7 @@ class municipio extends Model
     public function construct($d)
     {
         //   $table->increments('id'
-            $this->municipio_id = $d['id'];
+            $this->id = $d['id'];
             $this->nombre = $d['nombre'];
             $this->url = $d['url'];
             $this->logo = $d['logo'];
@@ -23,7 +23,7 @@ class municipio extends Model
     }
      public function hoteles()
     {
-        return $this->hasMany('App\hotel','municipio_id','municipio_id');
+        return $this->hasMany('App\hotel');
     }
 
 

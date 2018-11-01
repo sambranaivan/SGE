@@ -38,6 +38,6 @@ class hotel extends Model
 
     public function municipio()
     {
-        return $this->belongsTo('App\municipio','municipio_id','municipio_id');
+        return $this->belongsTo('App\municipio');
     }
 }
