@@ -35,7 +35,7 @@ class CreateHotelsTable extends Migration
             $table->string('situacion')->nullable();
             $table->string('estrellas')->nullable();
             $table->string('resolucion')->nullable();
-            $table->boolean('muestra')->default(true);
+            $table->boolean('muestra')->default(false);
             $table->timestamps();
         });
     }
