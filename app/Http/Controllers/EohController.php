@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 use App\eoh;
 use App\hotel;
 use App\municipio;
@@ -14,7 +15,15 @@ class EohController extends Controller
 public function index(){
 
     // $h = Hotel::orderBy('zona')->orderby('municipio_id')->get();
-    $m = Municipio::all();
+    //$m = Municipio::all();
+
+    //$models = Member::hydrateRaw( "SELECT * FROM members...");
+    $results = DB::select('SELECT DISTINCT m.* from municipios m
+LEFT JOIN hotels h
+on m.id = h.municipio_id
+where h.muestra = true');
+    $m = Municipio::hydrate($results);
+
     return view('turismo.eoh')->with('municipios',$m);
 }
 public function save(Request $request)

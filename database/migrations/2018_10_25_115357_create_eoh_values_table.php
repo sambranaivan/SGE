@@ -21,7 +21,7 @@ class CreateEohValuesTable extends Migration
             $table->date('fecha');
             $table->integer('day');
             $table->integer('ocupadas');
-            $table->integer('porcentaje');
+            $table->float('porcentaje',5,2);
 
             $table->timestamps();
         });

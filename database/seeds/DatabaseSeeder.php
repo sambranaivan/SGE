@@ -17,6 +17,20 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         self::crearMunicipios();
         self::crearHoteles();
+        self::crearMuestra();
+
+    }
+
+
+    private function crearMuestra(){
+        $muestra = array(4,5,9,15,17,18,19,21,23,55,62,63,65,67,71,73,76,77,78,84,86,89,104,117,120,125,127,130,132,137,138,180,181,182,183,187,211,212,213,216,217,218,219,220,231,235,238,239,244,246,247,250,251,252,256,266,271,276,278,280,281,284,286,291,297,301,311,312,313,314,315,318,323,326,328,338,339,340,342,354,356,357,358,359,360,361,366,368,376,379,381,393,395,399,402,403,405,408,412,423,426,437,443,446,447,448,449,453,460,469,473,474,479,480,481,491,492,493,495,496,497);
+
+       foreach ($muestra as $key => $value)
+       {
+        $h = hotel::find($value);
+        $h->muestra=true;
+        $h->save();
+       }
 
     }
 
@@ -552,6 +566,8 @@ Solar de las Huellas;70;Camping;Camping Municipal La Soñada;;;Yonchyk, Sergio;3
         $h = new Hotel();
         $h->construct($value);
     }
+
+
 
 
 

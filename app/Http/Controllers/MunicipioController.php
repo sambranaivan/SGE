@@ -12,7 +12,10 @@ class MunicipioController extends Controller
     public function getHotels($id)
     {
         $m = Municipio::find($id);
+        // return $m->hoteles->where('muestra',1)->j();
         return $m->hoteles->toJson();
     }
+
+
 
 }
