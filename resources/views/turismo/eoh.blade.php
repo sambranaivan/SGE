@@ -178,7 +178,7 @@ function updateMunicipio(muni_id)
                         $("#hotelOption").append(o);
                         muestra = 0;
                 data.forEach(function(item){
-                       if(item.muestra){//filtro muestra
+                       if(item.muestra |  (item.municipio_id == 15)){//filtro muestra
                             var o = new Option(item.denominacion, item.id);
                         /// jquerify the DOM object 'o' so we can use the html method
                         $(o).html(item.denominacion);
