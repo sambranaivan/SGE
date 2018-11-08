@@ -24,25 +24,15 @@
 
                 <div class="card-body">
 
-                    <form method="post">
+                    <form method="post" id="formulario">
 
                     @csrf
 
-                        {{--  <div class="form-group">
-                          <label for="hotel">Alojamiento</label>
-                          <select class="form-control selectpicker" name="hotel" id="frm_hotel" data-show-subtext="true" data-live-search="true" required>
-                            <option selected disabled>Seleccionar Alojamiento</option>
-                            @foreach ($hoteles as $h)
-                                <option data-subtext="{{$h->municipio->nombre}}" value="{{$h->id}}" plazas="{{$h->plazas}}"
-                                    >{{$h->denominacion}}</option>
-                            @endforeach
-                          </select>
-                          <label for="" id="plazas"></label>
-                        </div>  --}}
+
                         <div class="form-group" id="DivMunicipo">
                           <label for="municipio">Municipio</label>
-                          <select onchange="updateMunicipio(this.value)" class="form-control" name="municipio" id="municipioOption" data-live-search="true" required>
-                            <option selected disabled>Seleccione Municipio</option>
+                          <select onchange="updateMunicipio(this.value)" class="form-control selectpicker" name="municipio" id="municipioOption" data-live-search="true" data-validation="required">
+                            <option selected disabled>Seleccione Municipio</option required>
                             @foreach ($municipios as $m)
                                 <option value="{{$m->id}}">{{$m->nombre}}</option>
                             @endforeach
@@ -58,14 +48,28 @@
 
 
 
+                        {{-- FECHAS --}}
+                        <h3 class="text-muted text-center">Fechas del relevamiento</h3>
+                        <div class="form-group">
+                            <div class="row">
+                             <div class="col-md-12">
+                                 <label for="desde">Inicio</label>
+                                 <input type="date" name="desde" id="desde" class="form-control fechas" placeholder="" aria-describedby="helpDesde" required>
+                                 <small id="helpDesde" class="text-muted">Inicio del relevamiento</small>
+                                </div>
+                                <div class="col-md-12">
 
-                        {{-- <div class="form-group">
-                          <label for="">Plazas Totales</label>
-                          <input type="number" name="plazas" id="frm_plazas" class="form-control" placeholder="" aria-describedby="helpId" disabled>
-                        </div> --}}
+                                    <label for="hasta">Fin</label>
+                                    <input type="date" name="hasta" id="hasta" class="form-control fechas" placeholder="" aria-describedby="helphasta" required>
+                                    <small id="helphasta" class="text-muted">Fin del relevamiento</small>
+                                </div>
 
 
-                        {{-- TIPO DE CONSULTA --}}
+
+                            </div>
+                        </div>
+
+                         {{-- TIPO DE CONSULTA --}}
                         <div class="form-group">
                             <label for="tipo">Consulta por: </label>
                             <div class="form-check">
@@ -82,34 +86,8 @@
 
                         </div>
 
-                        {{-- FECHAS --}}
-                        <h3 class="text-muted text-center">Fechas del relevamiento</h3>
-                        <div class="form-group">
-                            <div class="row">
-                             <div class="col-md-12">
-                                 <label for="desde">Inicio</label>
-                                 <input type="date" name="desde" id="desde" class="form-control fechas" placeholder="" aria-describedby="helpDesde">
-                                 <small id="helpDesde" class="text-muted">Inicio del relevamiento</small>
-                                </div>
-                                <div class="col-md-12">
-
-                                    <label for="hasta">Fin</label>
-                                    <input type="date" name="hasta" id="hasta" class="form-control fechas" placeholder="" aria-describedby="helphasta">
-                                    <small id="helphasta" class="text-muted">Fin del relevamiento</small>
-                                </div>
-                                {{-- <div class="col-md-12">
-                                    <a class="from-control btn btn-block btn-success text-center" href="#" id="confirmarFechas">
-                                        Confirmar Fechas
-                                    </a>
-                                </div> --}}
-
-
-                            </div>
-                        </div>
-
                         <div class="form-group" id="reservas" style="display:none">
-                          <label for="">Reservas Totales</label>
-                          <input type="number" name="reservas" id="frm_reserva" class="form-control" placeholder="" aria-describedby="helpId">
+
                         </div>
 
 
@@ -117,15 +95,20 @@
 
 
                         </div>
-                         <div class="form-group" id="send">
+                         <div class="form-group" id="send" style="display:none";>
                             <button type="submit" class="btn btn-primary btn-block" id="submit">Enviar</button>
                         </div>
 
 
-                        <div class="alert alert-danger" id="alert_fechas" role="alert" style="display:none";>
-                          <h4 class="alert-heading">Error, el rango de fechas debe ser entre 3 y 5 días</h4>
-                          <p></p>
-                          <p class="mb-0"></p>
+                        <div class="alert alert-info" id="alert_fechas" role="alert">
+
+                          <p class="mb-0">Seleccione un rango de fechas, de 3 a 5 dias</p>
+                        </div>
+
+
+                        <div class="alert alert-danger" id="alert_hotel" role="alert" style="display: none">
+
+                          <p class="mb-0">Debe seleccionar un Hotel</p>
                         </div>
 
                     </form>
@@ -138,12 +121,13 @@
         </div>
     </div>
 </div>
-    {{--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"> </script>  --}}
   <script>
+
+    var globalHotel = 0;
+    var globalMuni = 0;
+    var globalPlaza = 0;
+
 Date.prototype.toDateInputValue = (function() {
     var local = new Date(this);
     //local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
@@ -179,6 +163,7 @@ function updateMunicipio(muni_id)
                         muestra = 0;
                 data.forEach(function(item){
                        if(item.muestra |  (item.municipio_id == 15)){//filtro muestra
+
                             var o = new Option(item.denominacion, item.id);
                         /// jquerify the DOM object 'o' so we can use the html method
                         $(o).html(item.denominacion);
@@ -206,88 +191,124 @@ function updateHotel(hotel_id)
         $("#plazasLabel").html('Plazas Totales: '+data.plazas);
         //$("#frm_plazas").val(data.plazas)
          $(".max_dia").attr("max",data.plazas)
+           actualizarForm();
+         globalPlaza = data.plazas;
 
     })
 }
 
 ////////////////////////////////////
-////////READY//////////////////
-////////////////////////////////////
-    $(function(){
-            //ready
-            $("#municipioOption").selectpicker();
-        ///prevent enter submit
-        $(window).keydown(function(event){
-    if(event.keyCode == 13) {
-      event.preventDefault();
-      return false;
-    }
-  });
-
-
-
-
-
-
-        var campos = $("#campos");
-        var reservas = $("#reservas");
-        var alerta = $("#alert_fechas");
-
-
-        // $('.fechas').val(new Date().toDateInputValue());
-
-        $('input:radio[name=tipo]').change(function(){
-            switch($(this).val())
-            {
-                case 'reserva':
-                 reservas.show();
-                campos.hide();
-                campos.html("")
-                break;
-                case 'ocupacion':
-                 reservas.hide();
-                campos.html('<table class="table"><thead><tr><th>Día</th><th>Plazas Ocupadas</th><th>Porcentaje de Ocupación</th></tr></thead><tbody id="cbody"></tbody> </table>')
-                 campos.show();
-                break;
-            }
-        })
-
-        $("#hasta").change(function(){
-
+ ///VALIDO LAS FECHAS Y DEPENDENDE DEL TIPO MUESTRO
+        function actualizarForm(){
             var tipo = $('input:radio[name=tipo]:checked').val();
 
-            switch(tipo)
-            {
-                case 'reserva':
-                reservas.show();
-                break;
-                case 'ocupacion':
-                var dias = diferencia();
-                        if(validarFechas(dias))
-                        {
-                            crearCampos(dias)
-                            campos.show();
-                            alerta.hide();
-                            reservas.hide();
-                        }
-                        else
-                        {
-                            campos.hide();
-                            alerta.show();
-                            reservas.hide();
-                        }
-                break;
 
+                ///validar dias
+            var dias = diferencia();
+            if(validarFechas(dias))
+            {
+                ocultarAlerta();
+                switch(tipo)
+                {
+                    case('reserva'):
+                    mostrarReserva();
+                    ocultarCampos();
+                    break;
+                    case('ocupacion'):
+                    mostrarCampos();
+                     crearCampos(dias);
+                    ocultarReserva();
+                    break;
+                }
+            }
+            else{
+                ocultarCampos();
+                ocultarReserva();
+                monstrarAlerta();
             }
 
+            //validar Hotel
+
+            if(validarHotel())
+            {
+                alert_hotel.hide();
+                submit.show();
+            }
+            else{
+                alert_hotel.show();
+                submit.hide();
+            }
+        }
+
+
+      var campos = $("#campos");
+        var reservas = $("#reservas");
+        var alerta = $("#alert_fechas");
+        var submit = $("#send");
+        var alert_hotel = $("#alert_hotel");
 
 
 
+        function mostrarReserva(){
+            reservas.html('<label for="">Reservas Totales</label><input type="number" name="reservas" id="frm_reserva" class="form-control" placeholder="" aria-describedby="helpId" required>').show();
+            $("#frm_reserva").attr("limit",globalPlaza)
+        }
+
+        function ocultarReserva(){
+            reservas.html("");
+        }
+
+        function monstrarAlerta(){
+            alerta.show();
+            if(!validarHotel())
+            {
+                alert_hotel.show();
+            }
+            else{
+                alert_hotel.hide();
+            }
+            submit.hide();
+        }
 
 
-        })
+        function validarHotel()
+        {
 
-        function crearCampos(dias){
+            if($("#municipioOption").val())
+            {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        function ocultarAlerta(){
+            alerta.hide();
+             if(!validarHotel())
+            {
+                alert_hotel.show();
+
+            }
+            else{
+                alert_hotel.hide();
+                submit.show();
+            }
+
+        }
+
+        function ocultarCampos(){
+                campos.hide();
+                campos.html("")
+        }
+
+        function mostrarCampos(){
+            campos.html('<table class="table"><thead><tr><th>Día</th><th>Plazas Ocupadas</th><th>Porcentaje de Ocupación</th></tr></thead><tbody id="cbody"></tbody> </table>')
+
+                campos.show();
+        }
+
+         function crearCampos(dias){
             $("#cbody").html("");
 
             var inicio = new Date($("#desde").val());
@@ -335,6 +356,43 @@ function updateHotel(hotel_id)
             console.log("Dias: "+ diffDays +1)
             return diffDays + 1;
         }
+
+////////READY//////////////////
+////////////////////////////////////
+    $(function(){
+            //ready
+            $("#municipioOption").selectpicker();
+                ///prevent enter submit
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+            }
+        });
+
+
+
+
+
+        //INPUT TYPE CHANGE
+        $('input:radio[name=tipo]').change(function(){
+
+           actualizarForm();
+        })
+
+
+
+
+        ///DATEPICKER #HASTA CHANGE
+        $("#hasta").change(function(){
+
+           actualizarForm();
+
+        })
+
+
+
+
 
 
         $("#frm_hotel").change(function(){
