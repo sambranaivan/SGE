@@ -250,7 +250,7 @@ function updateHotel(hotel_id)
 
 
         function mostrarReserva(){
-            reservas.html('<label for="">Reservas Totales</label><input type="number" name="reservas" id="frm_reserva" class="form-control" placeholder="" aria-describedby="helpId" required>').show();
+            reservas.html('<label for="">Reservas Totales</label><input type="number" name="reservas" id="frm_reserva" class="form-control" placeholder="" aria-describedby="helpReserva" required> <small id="helpReserva" class="text-muted">En cantidad de plazas</small>').show();
             $("#frm_reserva").attr("limit",globalPlaza)
         }
 
