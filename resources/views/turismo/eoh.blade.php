@@ -205,39 +205,41 @@ function updateHotel(hotel_id)
 
                 ///validar dias
             var dias = diferencia();
-            if(validarFechas(dias))
-            {
-                ocultarAlerta();
-                switch(tipo)
-                {
-                    case('reserva'):
-                    mostrarReserva();
-                    ocultarCampos();
-                    break;
-                    case('ocupacion'):
-                    mostrarCampos();
-                     crearCampos(dias);
-                    ocultarReserva();
-                    break;
-                }
-            }
-            else{
-                ocultarCampos();
-                ocultarReserva();
-                monstrarAlerta();
-            }
-
-            //validar Hotel
 
             if(validarHotel())
             {
-                alert_hotel.hide();
+                 alert_hotel.hide();
                 submit.show();
+                          if(validarFechas(dias))
+                                {
+                                    ocultarAlerta();
+                                    switch(tipo)
+                                    {
+                                        case('reserva'):
+                                        mostrarReserva();
+                                        ocultarCampos();
+                                        break;
+                                        case('ocupacion'):
+                                        mostrarCampos();
+                                        crearCampos(dias);
+                                        ocultarReserva();
+                                        break;
+                                    }
+                                }
+                                else{
+                                    ocultarCampos();
+                                    ocultarReserva();
+                                    monstrarAlerta();
+                                }
             }
-            else{
+            else
+            {
                 alert_hotel.show();
                 submit.hide();
             }
+
+
+
         }
 
 
