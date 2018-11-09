@@ -9,7 +9,7 @@ use App\eoh;
 use App\hotel;
 use App\municipio;
 use App\eoh_value;
-use App\user;
+use App\User;
 class EohController extends Controller
 {
     //

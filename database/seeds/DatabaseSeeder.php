@@ -5,7 +5,7 @@ use Illuminate\Database\Seeder;
 
 use App\hotel;
 use App\municipio;
-use App\user;
+use App\User;
 class DatabaseSeeder extends Seeder
 {
     /**
