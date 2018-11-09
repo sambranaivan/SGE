@@ -5,6 +5,7 @@ use Illuminate\Database\Seeder;
 
 use App\hotel;
 use App\municipio;
+use App\user;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -18,6 +19,30 @@ class DatabaseSeeder extends Seeder
         self::crearMunicipios();
         self::crearHoteles();
         self::crearMuestra();
+        self::crearUsuarios();
+
+    }
+
+    private function crearUsuarios(){
+
+        $u = new User();
+        $u->name = "administrador";
+        $u->email = "estadistica@corrientes.com";
+        $u->password = bcrypt("estadistica2018");
+        $u->save();
+
+        $u = new User();
+        $u->name = "observatorioturisticoctes";
+        $u->email = "observatorioturisticoctes@gmail.com";
+        $u->password = bcrypt("observatorio2018");
+        $u->save();
+
+        $u = new User();
+        $u->name = "Turismo Corrientes";
+        $u->email = "turismo@corrientes.com";
+        $u->password = bcrypt("turismo2018");
+        $u->save();
+
 
     }
 

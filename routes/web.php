@@ -14,6 +14,22 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+Route::group(['middleware' => ['auth']], function () {
+   // Only authenticated users may enter...
+   //
+Route::get('/','EncuestaController@index');
+Route::get('encuestas','EncuestaController@index');
+Route::get('consultas','EncuestaController@listado');
+Route::get('encuesta/{id}','EncuestaController@show');
+Route::get('encuesta/detalle/{id}','EncuestaController@showDetalle');
+Route::get('/enviar','ConsultaController@save');
+Route::get('/confirmacion/{id}','ConsultaController@show');
+
+Route::get('/nuevo',function(){
+    return view('nuevaencuesta');
+});
+
 Route::get('/','EncuestaController@index');
 Route::get('encuestas','EncuestaController@index');
 Route::get('consultas','EncuestaController@listado');
@@ -27,10 +43,6 @@ Route::get('/nuevo',function(){
 });
 
 Route::post('/crear','EncuestaController@crear');
-///lista de consultas
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 // turismo branch
 Route::get('turismo/eoh','EohController@index');
@@ -38,6 +50,15 @@ Route::post('turismo/eoh','EohController@save');
 Route::get('turismo/eoh/confirmar/{id}',"EohController@confirmar");
 Route::get('turismo/eoh/cancelar/{id}',"EohController@cancel");
 Route::get('turismo/eoh/detalle','EohController@show');
+
+});
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
 
 
 //test

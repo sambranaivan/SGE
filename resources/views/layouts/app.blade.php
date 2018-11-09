@@ -52,17 +52,17 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    {{--  <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
                             </li>
-                            <li class="nav-item">
+                            {{--  <li class="nav-item">
                                 @if (Route::has('register'))
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 @endif
-                            </li>
+                            </li>  --}}
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -73,7 +73,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Cerrar Sesión') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -82,7 +82,7 @@
                                 </div>
                             </li>
                         @endguest
-                    </ul>  --}}
+                    </ul>
                 </div>
             </div>
         </nav>

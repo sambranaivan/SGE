@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use DB;
 use App\eoh;
 use App\hotel;
 use App\municipio;
 use App\eoh_value;
+use App\user;
 class EohController extends Controller
 {
     //
@@ -38,6 +40,7 @@ public function save(Request $request)
     $e->hotel_id = $request->hotel;
     // $e->plazas = $request->plazas;
     $e->reservas = $request->reservas;
+    $e->user_id = Auth::user()->id;
     $e->save();
 
     if($request->has('fecha_0'))
@@ -101,6 +104,8 @@ public function confirmar($id){
     return view('turismo.eohConfirmar')->with('encuesta',$e)->with('arrayDias',$arrayDias);
 }
 public function show(){
+
+    //TODO
     $e = eoh::all();
     return view('turismo.eohDetalle')->with('encuestas',$e);
 }

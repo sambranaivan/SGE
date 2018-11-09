@@ -7,6 +7,9 @@
 <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
     <script>
     $(document).ready(function(){
+
+
+
             $("#descargar").click(function(){
                 $("#tabla").table2excel({
                 exclude: ".excludeThisClass",

@@ -20,6 +20,9 @@ class CreateEohsTable extends Migration
             $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
             $table->date('desde');
             $table->date('hasta');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+
             // $table->integer('plazas')->nullable();
             $table->integer('reservas')->nullable();
             //
