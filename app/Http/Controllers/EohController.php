@@ -106,7 +106,15 @@ public function confirmar($id){
 public function show(){
 
     //TODO
-    $e = eoh::all();
+    // $e = eoh::all();
+    if(Auth::user()->id == 1)
+    {
+        $e = eoh::all();
+    }
+    else{
+        $e = Auth::user()->eoh;
+    }
+
     return view('turismo.eohDetalle')->with('encuestas',$e);
 }
 
