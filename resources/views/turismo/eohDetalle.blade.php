@@ -31,7 +31,7 @@
 
                              <li class="nav-item">
                               <a class="btn btn-success" href="/turismo/eoh">
-                                    Nueva Consulta <i class="fas fa-plus"></i>
+                                    Nueva Carga <i class="fas fa-plus"></i>
                               </a>
                             </li>
                             <span>&nbsp;</span>

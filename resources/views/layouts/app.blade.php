@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Dirección de Estadística y Censos</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -34,7 +34,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                  Direccion de Estadística y Censos
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -47,7 +47,7 @@
                                 <a class="nav-link" href="/encuestas">Encuestas</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/turismo/eoh/detalle">Consultas</a>
+                                <a class="nav-link" href="/turismo/eoh/detalle">Ver datos</a>
                             </li>
                     </ul>
 
