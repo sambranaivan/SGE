@@ -33,9 +33,21 @@
                           <label for="municipio">Municipio</label>
                           <select onchange="updateMunicipio(this.value)" class="form-control selectpicker" name="municipio" id="municipioOption" data-live-search="true" data-validation="required">
                             <option selected disabled>Seleccione Municipio</option required>
-                            @foreach ($municipios as $m)
-                                <option value="{{$m->id}}">{{$m->nombre}}</option>
-                            @endforeach
+
+                                @if(Auth::user()->id == 3)
+                                {
+                                    <option value=15>Ciudad de Corrientes</option>
+                                }
+                                @else
+                                {
+                                    @foreach ($municipios as $m)
+                                    <option value="{{$m->id}}">{{$m->nombre}}</option>
+                                    @endforeach
+                                }
+                                @endif
+
+
+
                           </select>
                         </div>
 
@@ -252,8 +264,8 @@ function updateHotel(hotel_id)
 
 
         function mostrarReserva(){
-            reservas.html('<label for="">Reservas Totales</label><input type="number" name="reservas" id="frm_reserva" class="form-control" placeholder="" aria-describedby="helpReserva" required> <small id="helpReserva" class="text-muted">En cantidad de plazas</small>').show();
-            $("#frm_reserva").attr("limit",globalPlaza)
+            reservas.html('<label for="">Reservas Totales</label><input type="number" name="reservas" id="frm_reserva" class="form-control" placeholder="" aria-describedby="helpReserva" min="0" max="100" required> <small id="helpReserva" class="text-muted">En porcentajes</small>').show();
+            //$("#frm_reserva").attr("max",globalPlaza)
         }
 
         function ocultarReserva(){
