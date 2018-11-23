@@ -64,3 +64,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 //test
 Route::get('getHotels/{id}','MunicipioController@getHotels');
 Route::get('getHotel/{id}','HotelController@getHotel');
+
+
+
+////generar reporte
+
+Route::get('reporte','EohValueController@reporte');

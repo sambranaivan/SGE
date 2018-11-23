@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\eoh_values;
 class hotel extends Model
 {
     //
@@ -39,5 +39,31 @@ class hotel extends Model
     public function municipio()
     {
         return $this->belongsTo('App\municipio');
+    }
+
+
+    public function eoh(){
+        return $this->hasMany('App\eoh');
+    }
+
+
+    public function hasOcupacion($fecha,$user_id)///return tipe eoh_values
+    {
+        foreach ($this->eoh as $key => $eoh)
+        {
+            if($eoh->user_id == $user_id)///coincide el usuario
+            {
+                    foreach ($eoh->valores as $key => $value)
+                        {
+                            if($value->fecha == $fecha) // si la fecha coincide
+                            {
+
+                                return $value;
+                            }
+                        }
+            }
+        }
+        return false;
+
     }
 }
