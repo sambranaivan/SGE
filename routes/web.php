@@ -47,9 +47,15 @@ Route::post('/crear','EncuestaController@crear');
 // turismo branch
 Route::get('turismo/eoh','EohController@index');
 Route::post('turismo/eoh','EohController@save');
+
 Route::get('turismo/eoh/confirmar/{id}',"EohController@confirmar");
 Route::get('turismo/eoh/cancelar/{id}',"EohController@cancel");
 Route::get('turismo/eoh/detalle','EohController@show');
+
+
+
+//// Generar Reporte Administración
+Route::get('reporte','EohValueController@reporte');
 
 });
 
@@ -69,4 +75,4 @@ Route::get('getHotel/{id}','HotelController@getHotel');
 
 ////generar reporte
 
-Route::get('reporte','EohValueController@reporte');
+
