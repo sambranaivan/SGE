@@ -201,7 +201,7 @@
                 {{csrf_field()}}
             <div class="card">
                 <div class="card-header">Encuesta de Pobreza
-                    <a name="" id="" class="btn btn-primary" href="/pobreza/reporte" role="button">Ver Reporte</a>
+                    <a name="" id="" class="btn btn-primary float-right" href="/pobreza/reporte" role="button">Ver Reporte</a>
                 </div>
 
                 <div class="card-body" id="step1">
