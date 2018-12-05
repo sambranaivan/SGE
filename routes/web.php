@@ -61,6 +61,15 @@ Route::get('reporte','EohValueController@reporte');
 Route::get('gestion/reporte','EohValueController@vistaReporte');
 
 
+//Rutas de pobreza
+Route::get('/pobreza',function(){
+    return view('pobreza.pobreza');
+});
+
+Route::post('/reporte/post','PobrezaController@post');
+
+Route::get('/pobreza/reporte','PobrezaController@reporte');
+
 });
 
 
@@ -78,5 +87,8 @@ Route::get('getHotel/{id}','HotelController@getHotel');
 
 
 ////generar reporte
+
+
+
 
 

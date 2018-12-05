@@ -20,7 +20,16 @@
 
                 <div class="card-body">
                     <div class="list-group">
-                        <a href="turismo/eoh" class="list-group-item list-group-item-action active">Encuesta de Ocupación Hotelera</a>
+
+                        @if (Auth::user()->id == 1)
+                        <a href="/pobreza" class="list-group-item list-group-item-action active">Encuesta de Pobreza</a>
+                          <a href="turismo/eoh" class="list-group-item list-group-item-action active">Encuesta de Ocupación Hotelera</a>
+
+                        @else
+                            <a href="turismo/eoh" class="list-group-item list-group-item-action active">Encuesta de Ocupación Hotelera</a>
+                        @endif
+
+
 
                  {{--  @foreach ($encuestas as $item)
                         <a href="encuesta/{{$item->id}}" class="list-group-item list-group-item-action active">{{$item->titulo}}</a>
