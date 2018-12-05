@@ -58,7 +58,7 @@ Route::get('turismo/eoh/detalle','EohController@show');
 Route::get('reporte','EohValueController@reporte');
 
 
-Route:get('gestion/reporte','EohValueController@vistaReporte');
+Route::get('gestion/reporte','EohValueController@vistaReporte');
 
 
 });
