@@ -23,6 +23,8 @@ class PobrezaController extends Controller
         $p->direccion = $request->direccion;
         $p->telefono = $request->telefono;
         $p->miembros = $request->miembros;
+        $p->hogar = $request->hogar;
+        $p->jefe = $request->jefe;
 
         if($request->cuanto_option_1 == "1"){$p->trabajo = $request->cuanto_value_1;}
         if($request->cuanto_option_2 == "1"){$p->jubilacion = $request->cuanto_value_2;}

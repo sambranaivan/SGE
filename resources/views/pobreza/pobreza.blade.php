@@ -9,8 +9,8 @@
 
         fillStep3();
 
-        $("#step2").hide();
-        $("#step3").hide();
+       // $("#step2").hide();
+       // $("#step3").hide();
 
         $("#continuar2").click(function(){
                     $("#step2").hide();
@@ -163,8 +163,8 @@
 
         function generateRowStep3(query,index){
                 row ='<div class="row">'
-                row +='<div class="col-md-5">'+query+'</div>'
-                row +='<div class="col-md-2">'
+                row +='<div class="col-md-3">'+query+'</div>'
+                row +='<div class="col-md-3">'
                 row +='<div class="form-check form-check-inline">'
                 row +='<label class="form-check-label">'
                 row +='<input class="form-check-input radio" ref="'+index+'" type="radio" name="cuanto_option_'+index+'" id="" value=1> Si'
@@ -175,7 +175,8 @@
                 row +='<input class="form-check-input radio" ref="'+index+'" type="radio" name="cuanto_option_'+index+'" id="" value=0> No'
                 row +='</label>'
                 row +='</div>'
-                row +='</div>'
+                row +='</div></div>'//row
+                row += '<div class="row">'
                 row +='<div class="col-md-1">'
                 row +='<label class="float-right">Cuanto?</label>'
                 row +='</div>'
@@ -184,6 +185,8 @@
                 row +='<input type="number" name="cuanto_value_'+index+'" id="cuanto_value_'+index+'"  class="form-control input-sm  " placeholder="" aria-describedby="helpId">'
                 row +='</div>'
                 row +='</div>'
+
+
                 row +='</div>'
 
                 return row;
@@ -201,7 +204,7 @@
                 {{csrf_field()}}
             <div class="card">
                 <div class="card-header">Encuesta de Pobreza
-                    <a name="" id="" class="btn btn-primary float-right" href="/pobreza/reporte" role="button">Ver Reporte</a>
+                    <a name="" id="" class="btn btn-primary float-right" href="/pobreza/reporte" role="button">Ver Cargas</a>
                 </div>
 
                 <div class="card-body" id="step1">
@@ -256,13 +259,6 @@
 
                                             </div>
                                     </div>
-                                    <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="">Vivienda N°</label>
-                                                <input type="number" min=0 id="" name="vivienda_numero" class="form-control step1" placeholder="" aria-describedby="helpId" required>
-
-                                            </div>
-                                    </div>
                             <div class="col-md-3">
                                     <div class="form-group">
                                     <label for="">Direccion</label>
@@ -271,15 +267,34 @@
                                     </div>
                             </div>
                             <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Vivienda</label>
+                                                <input type="number" min=0 id="" name="vivienda_numero" class="form-control step1" placeholder="" aria-describedby="helpId" required>
+
+                                            </div>
+                            </div>
+                            <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Hogar</label>
+                                                <input type="number" min=0 id="" name="hogar" class="form-control step1" placeholder="" aria-describedby="helpId" required>
+
+                                            </div>
+                            </div>
+
+                            <div class="col-md-3">
                                     <div class="form-group">
                                     <label for="">Telefono</label>
                                     <input type="text" name="telefono" id="" class="form-control step1" placeholder="" aria-describedby="helpId" required>
 
                                     </div>
                             </div>
+                             <div class="col-md-3">
+                                    <div class="form-group">
+                                    <label for="">Jefe</label>
+                                    <input type="text" name="jefe" id="" class="form-control step1" placeholder="" aria-describedby="helpId" required>
 
-                         </div>
-                         <div class="row">
+                                    </div>
+                            </div>
                              <div class="col-md-3">
                                   <div class="form-group">
                                     <label for="">Cantidad de Miembros de la Familia</label>
@@ -287,13 +302,18 @@
 
                                     </div>
                              </div>
-                         </div>
-                         <div class="row">
-                             <div class="col-md-3">
+                              <div class="col-md-3">
                                 <div class="form-group">
                                     <a href="#" class="btn btn-primary btn-block form-control" id="continuar">Continuar</a>
                                 </div>
                              </div>
+
+                         </div>
+                         <div class="row">
+
+                         </div>
+                         <div class="row">
+
                          </div>
 
 
