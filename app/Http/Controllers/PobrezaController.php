@@ -42,9 +42,9 @@ class PobrezaController extends Controller
 
         for ($i=1; $i <= $request->miembros ; $i++)
         {
-
             $f = new Pobreza_familia();
             $f->sexo = $request->input('sexo_'.$i);
+            $f->nombre = $request->input('nombre_'.$i);
             $f->edad = $request->input('edad_'.$i);
             $f->pobreza_id = $p->id;
             $f->save();

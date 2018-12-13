@@ -14,7 +14,7 @@ class AlterFamiliaAddNombre extends Migration
     public function up()
     {
         Schema::table('pobreza_familias', function (Blueprint $table) {
-            //
+
             $table->string('nombre');
         });
     }

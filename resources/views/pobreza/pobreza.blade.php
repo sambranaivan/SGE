@@ -53,10 +53,12 @@
                     for(i=1;i<=cantidad;i++)
                     {
                                 row =  '<tr>'
-                                row += '<td scope="row">'+i+'</td>'
-                                row += '<td>'
+                                row += '<td scope="row">'+i+'</td><td>'
                                 row += '<div class="form-group">'
-
+                                row += '<input type="text" min="0" max="99" class="form-control" name="nombre_'+i+'">'
+                                row += '</div>'
+                                row += '</td><td>'
+                                row += '<div class="form-group">'
                                 row += '<select name="sexo_'+i+'" class="form-control">'
                                 row += '<option value="0" selected="selected" disabled>--</option>'
                                 row += '<option value="H">Hombre</option>'
@@ -66,7 +68,6 @@
                                 row += '</td>'
                                 row += '<td>'
                                 row += '<div class="form-group">'
-
                                 row += '<input type="text" min="0" max="99" class="form-control" name="edad_'+i+'">'
                                 row += '</div>'
                                 row += '</td>'
@@ -328,6 +329,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                     <th>Nombre</th>
                                     <th>Sexo</th>
                                     <th>Edad</th>
                                 </tr>
