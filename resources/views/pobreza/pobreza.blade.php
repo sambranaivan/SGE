@@ -3,6 +3,8 @@
 @section('content')
 <script>
 
+    var familia = [];
+    var cantidad ;
 
     $(document).ready(function(){
 
@@ -15,6 +17,12 @@
         $("#continuar2").click(function(){
                     $("#step2").hide();
                     $("#step3").show();
+                    familia = [];//empty array
+
+             $(".nombre").each(function(){
+                 index= $(this).data('index');
+                 familia[index] = {nombre:$(this).val()}
+             })
         })
 
 
@@ -46,7 +54,7 @@
 
 
             if(valid){
-                var cantidad = $("#miembros").val();
+                cantidad = $("#miembros").val();///cantidad de miembros en la familia
                 if(cantidad){
                     $("#step1").hide();
                     $("#table_body").html("");//limpio tabla
@@ -55,7 +63,7 @@
                                 row =  '<tr>'
                                 row += '<td scope="row">'+i+'</td><td>'
                                 row += '<div class="form-group">'
-                                row += '<input type="text" min="0" max="99" class="form-control" name="nombre_'+i+'">'
+                                row += '<input type="text" min="0" max="99" class="form-control nombre" data-index='+i+' name="nombre_'+i+'">'
                                 row += '</div>'
                                 row += '</td><td>'
                                 row += '<div class="form-group">'
@@ -68,7 +76,7 @@
                                 row += '</td>'
                                 row += '<td>'
                                 row += '<div class="form-group">'
-                                row += '<input type="text" min="0" max="99" class="form-control" name="edad_'+i+'">'
+                                row += '<input type="text" min="0" max="99" class="form-control edad" data-index='+i+' name="edad_'+i+'">'
                                 row += '</div>'
                                 row += '</td>'
                                 row += '</tr>'
@@ -127,19 +135,22 @@
 
             ///
 
-            //databinding
+            //databinding de los checkbox
 
             $(".radio").change(function(){
                 el = $(this);
                 ref = el.attr('ref');
                 selector = ("#cuanto_value_"+ref);
                 control = $(selector)
+                query = $(this).data('query');
 
                 if(el.val() == 1)//si
                 {
                     console.log(selector+"->"+el.val())
-                    control.removeAttr('disabled');
-                    control.removeAttr('required');
+
+                    showMontosModal(query,cantidad,ref);
+
+
                 }
                 else{//no
                     console.log(selector+"->"+el.val())
@@ -164,36 +175,63 @@
 
         function generateRowStep3(query,index){
                 row ='<div class="row">'
-                row +='<div class="col-md-3">'+query+'</div>'
-                row +='<div class="col-md-3">'
+                row +='<div class="col-md-6">'+query+'</div>'
+                row +='<div class="col-md-6">'
                 row +='<div class="form-check form-check-inline">'
                 row +='<label class="form-check-label">'
-                row +='<input class="form-check-input radio" ref="'+index+'" type="radio" name="cuanto_option_'+index+'" id="" value=1> Si'
+                row +='<input class="form-check-input radio" data-query="'+query+'" ref="'+index+'" type="radio" name="cuanto_option_'+index+'" id="" value=1> Si'
                 row +='</label>'
                 row +='</div>'
                 row +='<div class="form-check form-check-inline">'
                 row +='<label class="form-check-label">'
-                row +='<input class="form-check-input radio" ref="'+index+'" type="radio" name="cuanto_option_'+index+'" id="" value=0> No'
+                row +='<input class="form-check-input radio" data-query="'+query+'" ref="'+index+'" type="radio" name="cuanto_option_'+index+'" id="" value=0 checked> No'
                 row +='</label>'
                 row +='</div>'
                 row +='</div></div>'//row
-                row += '<div class="row">'
-                row +='<div class="col-md-1">'
-                row +='<label class="float-right">Cuanto?</label>'
-                row +='</div>'
-                row +=' <div class="col-md-2">'
-                row +='<div class="form-group-sm">'
-                row +='<input type="number" name="cuanto_value_'+index+'" id="cuanto_value_'+index+'"  class="form-control input-sm  " placeholder="" aria-describedby="helpId">'
-                row +='</div>'
-                row +='</div>'
-
-
-                row +='</div>'
-
                 return row;
         }
 
 
+        function showMontosModal(query,count,index){
+
+
+            modal = $("#montosModal")
+            title = $("#montosModal .modal-title");
+            body = $("#montosModal .modal-body");
+
+            body.html("");
+
+            tablita = '<table class="table">'
+
+                tablita += '<tr>'
+                    tablita += '<td>#</td>'
+                    for(i=1;i<=count;i++)
+                    {
+                        tablita += '<td>'
+                            tablita += familia[i].nombre
+                        tablita += '</td>'
+                    }
+                    tablita += '</tr>'
+
+                    tablita += '<tr>'
+                    tablita += '<td>#</td>'
+                    for(i=1;i<=count;i++)
+                    {
+                        tablita += '<td>'
+                            tablita += '<input type="number" class="form-control">'
+                        tablita += '</td>'
+                    }
+                tablita += '</tr>'
+
+            tablita += '</table>'
+
+            body.html(tablita);
+            title.html(query);
+
+
+
+            modal.modal();
+        }
 
 
     })
@@ -355,6 +393,30 @@
 
             </form>
         </div>
+
+
+
     </div>
 </div>
+ {{-- MODAL MONTOS --}}
+            <div class="modal fade" id="montosModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="btn_montosCancelar" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" id="id_montosGuardar">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{--  --}}
 @endsection

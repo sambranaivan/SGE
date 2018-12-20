@@ -87,7 +87,7 @@
 
                       @foreach ($encuestas as $item)
 
-
+                            @if($item->desde >= Carbon\Carbon::now()->subDay(14))
                     <tr>
                         <th scope="row">{{$item->id}}
                                 </th>
@@ -119,6 +119,7 @@
 
 
                     </tr>
+                    @endif
                     @endforeach
                         </tbody>
                     </table>
