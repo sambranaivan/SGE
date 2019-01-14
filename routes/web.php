@@ -17,6 +17,13 @@
 
 Route::group(['middleware' => ['auth']], function () {
    // Only authenticated users may enter...
+
+Route::get('turismo/admin',function(){
+    return view('turismo.turismoadmin');
+});
+Route::get('turismo/cierre',"EohValueController@cierre");
+Route::post('turismo/getreport',"EohValueController@getReport");
+
    //
 Route::get('/','EncuestaController@index');
 Route::get('encuestas','EncuestaController@index');
@@ -28,6 +35,8 @@ Route::get('/confirmacion/{id}','ConsultaController@show');
 
 Route::get('/nuevo',function(){
     return view('nuevaencuesta');
+
+    // PANEL DE ADMINISTRACIO
 });
 
 Route::get('/','EncuestaController@index');
@@ -56,7 +65,7 @@ Route::post('turismo/eoh/detalle','EohController@showfilter');
 
 
 //// Generar Reporte Administración
-Route::get('reporte','EohValueController@reporte');
+// Route::get('reporte','EohValueController@reporte');
 
 
 Route::get('gestion/reporte','EohValueController@vistaReporte');
@@ -72,7 +81,9 @@ Route::post('/reporte/post','PobrezaController@post');
 Route::get('/pobreza/reporte','PobrezaController@reporte');
 
 });
+// ruta publica
 
+Route::get('/turismo/reporte/{desde}/{hasta}/{user}','EohValueController@showReporte');
 
 Auth::routes();
 

@@ -6,6 +6,7 @@ use DB;
 use Illuminate\Http\Request;
 use App\hotel;
 use App\eoh;
+use App\User;
 use App\eoh_value;
 use DatePeriod;
 use DateTime;
@@ -19,15 +20,41 @@ public function reporte(){
 }
 
 
-public function getReport($user,$desde,$hasta)
+public function cierre(){
+    $u = User::all();
+
+    return view('turismo.cierre')->with('users',$u);
+}
+
+public function showReporte($desde,$hasta,$user)
 {
-        $user = 2; //usuario de la encuesta
+
+$values = DB::table('eoh_values')->select('eoh_values.id as id','fecha','day','ocupadas','fecha','porcentaje','ponderado','municipios.nombre','porcentaje','hotels.denominacion as hotel')
+       ->leftJoin('eohs','eohs.id',"=",'eoh_values.eoh_id')
+       ->leftJoin('hotels','eohs.hotel_id',"=",'hotels.id')
+       ->leftJoin('municipios','municipios.id',"=",'hotels.municipio_id')
+       ->where('eohs.user_id',$user)
+       ->whereDate('fecha','>=',$desde)
+       ->whereDate('fecha','<=',$hasta)
+       ->orderBy('nombre','desc')
+       ->get();
+// echo $values->toJson();
+    //    print_r($values);
+return view('turismo.reporte')->with('values',$values);
+
+}
+
+
+public function getReport(request $request)
+{
+        $user = $request->user_id; //usuario de la encuesta
+        $desde = $request->desde;
+        $hasta = $request->hasta;
         // $day = '2018-11-16';
-    $period = new DatePeriod(
+     $period = new DatePeriod(
      new DateTime($desde),
      new DateInterval('P1D'),
-     new DateTime($hasta)
-);
+     new DateTime($hasta));
 
         /**
          * Busco todos lo hoteles de la muestra*/
@@ -70,6 +97,9 @@ foreach ($period as $key => $date) {
 }//end foreach day_array
 
 
+
+// mostrar reporte
+return redirect('turismo/reporte/'.$desde.'/'.$hasta.'/'.$user);
 }
 
 
