@@ -106,17 +106,66 @@ public function confirmar($id){
 public function show(){
 
     //TODO
+    // SELECT DISTINCT desde,hasta, IF(IFNULL(reservas,0) = 0,'Ocupacion','Reserva') as tipo from eohs
     // $e = eoh::all();
     if(Auth::user()->id == 1)
     {
         $e = eoh::all();
+
     }
     else{
         $e = Auth::user()->eoh;
+
     }
 
-    return view('turismo.eohDetalle')->with('encuestas',$e);
+    // rangos
+
+
+
+    return view('turismo.eohDetalle')->with('encuestas',$e)->with('default',true);
 }
+
+
+
+// con filtro
+public function showfilter(Request $request){
+
+
+    if(Auth::user()->id == 1)
+    {
+        if($request->tipo == "reserva"){
+        $e = eoh::whereDate('desde','>=',$request->desde)
+        ->whereDate('hasta','<=',$request->hasta)->whereNotNull('reservas')->get();
+        }
+        else
+        {
+        $e = eoh::whereDate('desde','>=',$request->desde)
+        ->whereDate('hasta','<=',$request->hasta)->whereNull('reservas')->get();
+        }
+
+    }
+    else{
+        // $e = Auth::user()->eoh
+
+         if($request->tipo == "reserva"){
+        $e = eoh::whereDate('desde','>=',$request->desde)
+        ->whereDate('hasta','<=',$request->hasta)->whereNotNull('reservas')->where('id','=',Auth::user()->id)->get();
+        }
+        else
+        {
+        $e = eoh::whereDate('desde','>=',$request->desde)
+        ->whereDate('hasta','<=',$request->hasta)->whereNull('reservas')->where('id','=',Auth::user()->id)->get();
+        }
+
+    }
+
+
+
+
+    // echo($request->input('tipo'));
+    return view('turismo.eohDetalle')->with('encuestas',$e)->with('default',false);
+}
+
 
 public function delete($id)
 {

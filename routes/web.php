@@ -51,6 +51,7 @@ Route::post('turismo/eoh','EohController@save');
 Route::get('turismo/eoh/confirmar/{id}',"EohController@confirmar");
 Route::get('turismo/eoh/cancelar/{id}',"EohController@cancel");
 Route::get('turismo/eoh/detalle','EohController@show');
+Route::post('turismo/eoh/detalle','EohController@showfilter');
 
 
 

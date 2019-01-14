@@ -26,6 +26,24 @@
                 <div class="card-header">
                     <nav class="navbar navbar-expand-md  ">
 
+                        <form method="POST" action="/turismo/eoh/detalle" class="form-inline">
+                            @csrf
+                            <div class="form-group">
+                                <label for="desde">Desde</label>
+                                <input type="date" name="desde" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                                <label for="hasta">Hasta</label>
+                                <input type="date" name="hasta" id="" class="form-control" placeholder="" aria-describedby="helpId">
+
+                                  <select class="form-control" name="tipo" id="">
+                                    <option value="ocupacion">Ocupación</option>
+                                    <option value="reserva">Reservas</option>
+                                  </select>
+
+                                  <input type="submit"  class="btn btn-small btn-primary" value="Buscar">
+                            </div>
+                        </form>
+
+
                         <!-- Left Side Of Navbar -->
                             <ul class="navbar-nav ml-auto">
 
@@ -87,39 +105,63 @@
 
                       @foreach ($encuestas as $item)
 
-                            @if($item->desde >= Carbon\Carbon::now()->subDay(14))
-                    <tr>
-                        <th scope="row">{{$item->id}}
-                                </th>
+                                {{--  por defecto mostrar ultimas dos semanas  --}}
+                                @if ($default)
+                                    @if($item->desde >= Carbon\Carbon::now()->subDay(14))
+                                            <tr>
+                                                        <th scope="row">
+                                                            {{$item->id}}
+                                                        </th>
+                                                        <td>{{$item->hotel->zona}}</td>
+                                                        <td>{{$item->hotel->municipio->nombre}}</td>
+                                                        <td>{{$item->hotel->categoria}}</td>
+                                                        <td>{{$item->hotel->denominacion}}</td>
 
+                                                        <td>{{$item->hotel->plazas}}</td>
+                                                        <td>{{$item->reservas}}</td>
+                                                        @foreach ($item->valores as $dia)
+                                                        <td>
+                                                            {{date('d-m-Y', strtotime($dia->fecha))}}
+                                                        </td>
+                                                        <td>
+                                                            {{$dia->ocupadas}}
+                                                        </td>
+                                                        <td>
+                                                            {{$dia->porcentaje}}%
+                                                        </td>
+                                                        @endforeach
+                                            </tr>
+                                    @endif
+                                @else
+                                            {{--    --}}
 
+                                             <tr>
+                                                        <th scope="row">
+                                                            {{$item->id}}
+                                                        </th>
+                                                        <td>{{$item->hotel->zona}}</td>
+                                                        <td>{{$item->hotel->municipio->nombre}}</td>
+                                                        <td>{{$item->hotel->categoria}}</td>
+                                                        <td>{{$item->hotel->denominacion}}</td>
 
-                                <td>{{$item->hotel->zona}}</td>
-                                <td>{{$item->hotel->municipio->nombre}}</td>
-                                <td>{{$item->hotel->categoria}}</td>
-                                <td>{{$item->hotel->denominacion}}</td>
+                                                        <td>{{$item->hotel->plazas}}</td>
+                                                        <td>{{$item->reservas}}</td>
+                                                        @foreach ($item->valores as $dia)
+                                                        <td>
+                                                            {{date('d-m-Y', strtotime($dia->fecha))}}
+                                                        </td>
+                                                        <td>
+                                                            {{$dia->ocupadas}}
+                                                        </td>
+                                                        <td>
+                                                            {{$dia->porcentaje}}%
+                                                        </td>
+                                                        @endforeach
+                                            </tr>
+                                            {{--    --}}
 
-                                <td>{{$item->hotel->plazas}}</td>
-                                <td>{{$item->reservas}}</td>
-                                @foreach ($item->valores as $dia)
-                                <td>
+                                @endif
 
-                                       {{date('d-m-Y', strtotime($dia->fecha))}}
-                                </td>
-
-                                    <td>
-                                    {{$dia->ocupadas}}
-                                    </td>
-
-                                    <td>
-                                    {{$dia->porcentaje}}%
-                                    </td>
-                                @endforeach
-
-
-
-                    </tr>
-                    @endif
                     @endforeach
                         </tbody>
                     </table>
