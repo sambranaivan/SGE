@@ -101,6 +101,6 @@ Route::get('getHotel/{id}','HotelController@getHotel');
 ////generar reporte
 
 
-
+Route::get('test/reservas','EohController@reporteReservas');
 
 

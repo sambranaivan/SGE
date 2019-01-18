@@ -66,4 +66,6 @@ class hotel extends Model
         return false;
 
     }
+
+
 }

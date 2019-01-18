@@ -184,4 +184,75 @@ public function cancel($id)
     return redirect('turismo/eoh')->with('mensaje','Envio cancelado');
 }
 
+// Ponderacion de reservas
+
+public function reporteReservas(){
+
+    // busco todos los hoteles
+
+    $hoteles = hotel::whereRaw('muestra = 1 or municipio_id = 15')->get();
+    //  $user = $request->user_id; //usuario de la encuesta
+        // $desde = $request->desde;
+        $desde = '2019-01-18';
+        $hasta = '2019-01-20';
+        // $hasta = $request->hasta;
+        // $day = '2018-11-16';
+    //  $period = new DatePeriod(
+    //  new DateTime($desde),
+    //  new DateInterval('P1D'),
+    //  new DateTime($hasta));
+
+     ///por cada hotel pregunto si tiene un registro eoh en esta fecha
+
+     foreach ($hoteles as $hotel)
+     {
+            $registro = eoh::whereDate('desde','>=',$desde)
+        ->whereDate('hasta','<=',$hasta)
+        ->where('hotel_id',$hotel->id)->count();
+
+
+        if($registro == 0 )
+        {
+            // generar ponderador
+
+            $ponderador = $this->getPonderador($desde,$hasta,$hotel->id);
+            // create_dummy
+            $this->createDummy($desde,$hasta,1,$ponderador,$hotel->id);
+        }
+     }
+
+}
+
+
+public function createDummy($desde,$hasta,$user_id,$reservas,$hotel_id)
+{
+    $eoh = new eoh();
+    $eoh->user_id = $user_id;//por observatorio turistico
+    $eoh->desde = $desde;
+    $eoh->hasta = $hasta;
+    $eoh->reservas = $reservas;
+    $eoh->hotel_id = $hotel_id;
+    $eoh->save();
+}
+
+public function getPonderador($desde,$hasta,$hotel_id)
+{
+
+    $hotel = hotel::find($hotel_id);
+    $pond = DB::table('eohs')
+    ->leftJoin('hotels','hotels.id',"=",'eohs.hotel_id')
+    ->leftJoin('municipios','municipios.id',"=",'hotels.municipio_id')
+    ->whereDate('desde','>=',$desde)
+    ->whereDate('hasta','<=',$hasta)
+    ->where('municipios.id',"=",$hotel->municipio->id)->avg('reservas');
+
+
+    echo $hotel->municipio->nombre."-".$pond."</br>";
+    return $pond;
+}
+
+
+
+
+
 }
