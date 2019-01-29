@@ -18,6 +18,8 @@
 Route::group(['middleware' => ['auth']], function () {
    // Only authenticated users may enter...
 
+
+
 Route::get('turismo/admin',function(){
     return view('turismo.turismoadmin');
 });
@@ -104,3 +106,8 @@ Route::get('getHotel/{id}','HotelController@getHotel');
 Route::get('test/reservas','EohController@reporteReservas');
 
 
+//
+//
+//
+// Rutas Carnaval
+Route::get('/carnaval', 'JsonController@report');
