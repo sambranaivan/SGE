@@ -96,7 +96,7 @@ class JsonController extends Controller
     public function report(){
 
         // Consulta de transporte
-        $transporte = DB::select('SELECT transporte as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals GROUP BY transporte ORDER BY y desc');
+        $transporte = DB::select('SELECT transporte as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where transporte IS NOT NULL GROUP BY transporte ORDER BY y desc');
         $t = [];
         foreach ($transporte as $key => $value)
         {
@@ -114,7 +114,7 @@ class JsonController extends Controller
 
         // consulta de procedencia
         $p = [];
-        $procedencia = DB::select('SELECT procedencia as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals GROUP BY procedencia ORDER BY y desc');
+        $procedencia = DB::select('SELECT procedencia as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where procedencia IS NOT NULL GROUP BY procedencia ORDER BY y desc');
          foreach ($procedencia as $key => $value)
         {
 
@@ -122,7 +122,7 @@ class JsonController extends Controller
         }
         // consulta sexo
         $s = [];
-        $sexo = DB::select('SELECT sexo as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals GROUP BY sexo ORDER BY y desc');
+        $sexo = DB::select('SELECT sexo as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where sexo IS NOT NULL GROUP BY sexo ORDER BY y desc');
          foreach ($sexo as $key => $value)
         {
            if($value->label == 'F')
@@ -136,18 +136,9 @@ class JsonController extends Controller
             $s[] = (array) $value;
         }
 
-
-
-
-
-
-
-
-
-
 // lugar_alojamiento
         $la = [];
-        $lugar_alojamiento = DB::select('SELECT lugar_alojamiento as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals GROUP BY lugar_alojamiento ORDER BY y desc');
+        $lugar_alojamiento = DB::select('SELECT lugar_alojamiento as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where lugar_alojamiento IS NOT NULL GROUP BY lugar_alojamiento ORDER BY y desc');
          foreach ($lugar_alojamiento as $key => $value)
         {
 
@@ -155,7 +146,7 @@ class JsonController extends Controller
         }
 // tipoalojamiento
         $ta = [];
-        $tipoalojamiento = DB::select('SELECT tipoalojamiento as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals GROUP BY tipoalojamiento ORDER BY y desc');
+        $tipoalojamiento = DB::select('SELECT tipoalojamiento as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where tipoalojamiento IS NOT NULL GROUP BY tipoalojamiento ORDER BY y desc');
          foreach ($tipoalojamiento as $key => $value)
         {
 
@@ -164,7 +155,7 @@ class JsonController extends Controller
 // edad
 // viaje
          $vi = [];
-        $viaje = DB::select('SELECT viaje as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals GROUP BY viaje ORDER BY y desc');
+        $viaje = DB::select('SELECT viaje as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where viaje IS NOT NULL  GROUP BY viaje ORDER BY y desc');
          foreach ($viaje as $key => $value)
         {
 
@@ -173,7 +164,7 @@ class JsonController extends Controller
 // cantidad_personas
 // informo
          $in = [];
-        $informo = DB::select('SELECT informo as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals GROUP BY informo ORDER BY y desc');
+        $informo = DB::select('SELECT informo as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where informo IS NOT NULL  GROUP BY informo ORDER BY y desc');
          foreach ($informo as $key => $value)
         {
 
@@ -181,7 +172,7 @@ class JsonController extends Controller
         }
 // motivo
          $mo = [];
-        $motivo = DB::select('SELECT motivo as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals GROUP BY motivo ORDER BY y desc');
+        $motivo = DB::select('SELECT motivo as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where motivo IS NOT NULL  GROUP BY motivo ORDER BY y desc');
          foreach ($motivo as $key => $value)
         {
 
@@ -193,7 +184,7 @@ class JsonController extends Controller
 // recomendaria
 // gastos
         $gas = [];
-        $gastos = DB::select('SELECT gastos as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals GROUP BY gastos ORDER BY y desc');
+        $gastos = DB::select('SELECT gastos as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where gastos IS NOT NULL  GROUP BY gastos ORDER BY y desc');
          foreach ($gastos as $key => $value)
         {
           switch ($value->label) {
