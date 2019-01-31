@@ -84,7 +84,9 @@ class JsonController extends Controller
 		$carnaval->primeravez = $data->primeravez;
 		$carnaval->recomendaria = $data->recomendaria;
 		$carnaval->gastos = $data->gastos;
-		$carnaval->userid = $data->userid;
+        $carnaval->userid = $data->userid;
+        $carnaval->latitud = $data->latitud;
+        $carnaval->longitud = $data->longitud;
 		$carnaval->timestamp = $data->timestamp;
 		$carnaval->save();
 		echo $carnaval->id;
