@@ -49,6 +49,12 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/turismo/eoh/detalle">Ver datos</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/carnaval">Carnavales Oficiales</a>
+                            </li>
+
+
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
