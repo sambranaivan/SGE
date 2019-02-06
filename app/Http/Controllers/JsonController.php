@@ -103,7 +103,7 @@ class JsonController extends Controller
 
         switch ($dia) {
                case 11:
-                    $desde = '2018-02-08 20:00:00';
+                    $desde = '2019-02-08 20:00:00';
                     $hasta = '2019-03-05 08:00:00';
                     break;
                 case 1:
