@@ -3,17 +3,76 @@
 @section('content')
 
 <div class="container">
+    <div class="row">
+    <div class="col-md-6">
+    <div class="card">
+
+        <div class="card-header">
+            Seleccionar Día
+        </div>
+        <div class="card-body">
+         <form class="form">
+        <div class="form-group">
+            <select name="dia" id="select" class="form-control form-control-lg">
+                <option value="1" @if($dia == 1) selected @endif >Viernes 8</option>
+                <option value="2" @if($dia == 2) selected @endif >Sábado 9</option>
+                <option value="3" @if($dia == 3) selected @endif >Viernes 15</option>
+                <option value="4" @if($dia == 4) selected @endif >Sábado 16</option>
+                <option value="5" @if($dia == 5) selected @endif >Viernes 22</option>
+                <option value="6" @if($dia == 6) selected @endif >Sábado 23</option>
+                <option value="7" @if($dia == 7) selected @endif >Viernes 1</option>
+                <option value="8" @if($dia == 8) selected @endif >Sábado 2</option>
+                <option value="9" @if($dia == 9) selected @endif >Domingo 3</option>
+                <option value="10" @if($dia == 10) selected @endif >Lunes 4</option>
+                 <option value="11" @if($dia == 11) selected @endif >Global</option>
 
 
+
+
+
+            </select>
+        </div>
+        <form>
+              <h3>Encuestas Totales:
+            @foreach ($cantidad as $cant)
+                {{$cant->cantidad}}
+            @endforeach
+
+        </h3>
+    </div>
+</div>
+</div>
+<div class="col-md-6">
+<div class="card">
+    <div class="card-header">
+        Encuestadores
+    </div>
+    <div class="card-body">
+
+        <ul class="list-group">
+            @foreach ($encuestadores as $encuestador)
+        <li class="list-group-item">{{$encuestador->nombre}} :{{$encuestador->cantidad}}</li>
+    @endforeach
+        </ul>
+
+    </div>
+</div>
+
+</div>
+</div>
+
+
+
+    {{-- graficos --}}
     <div id="chartProcedencia"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
     <div id="chartTransporte"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
-        <div id="chartSexo"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
-        <div id="chartAlojamiento"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
-        <div id="chartTipoAlojamiento"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
-        <div id="chartGastos"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
-        <div id="chartMotivo"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
-        <div id="chartInformo"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
-        <div id="chartViaje"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
+    <div id="chartSexo"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
+    <div id="chartAlojamiento"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
+    <div id="chartTipoAlojamiento"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
+    <div id="chartGastos"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
+    <div id="chartMotivo"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
+    <div id="chartInformo"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
+    <div id="chartViaje"  style="margin-bottom:25px;float:left;height: 300px; width: 50%;"></div>
 
 
 
@@ -21,6 +80,14 @@
 
 </div>
 <script>
+
+   $(document).ready(function(){
+$('select').on('change', function() {
+//  alert( this.value );
+window.location.href = "/carnaval/"+this.value;
+});
+
+   })
 
 window.onload = function () {
 

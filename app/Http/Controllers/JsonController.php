@@ -95,10 +95,90 @@ class JsonController extends Controller
     }
 
     // api results
-    public function report(){
+    public function reporte(){
+        return $this->report(1);
+    }
+
+    public function report($dia){
+
+        switch ($dia) {
+               case 11:
+                    $desde = '2019-02-08 20:00:00';
+                    $hasta = '2019-03-05 08:00:00';
+                    break;
+                case 1:
+                    $desde = '2019-02-08 20:00:00';
+                    $hasta = '2019-02-09 08:00:00';
+                break;
+                case 2:
+                    $desde = '2019-02-09 20:00:00';
+                    $hasta = '2019-02-10 08:00:00';
+                break;
+                case 3:
+                    $desde = '2019-02-15 20:00:00';
+                    $hasta = '2019-02-16 08:00:00';
+                break;
+                case 4:
+                    $desde = '2019-02-16 20:00:00';
+                    $hasta = '2019-02-17 08:00:00';
+                break;
+                case 5:
+                    $desde = '2019-02-22 20:00:00';
+                    $hasta = '2019-02-23 08:00:00';
+                break;
+                case 6:
+                    $desde = '2019-02-23 20:00:00';
+                    $hasta = '2019-02-24 08:00:00';
+                break;
+                case 7:
+                    $desde = '2019-03-01 20:00:00';
+                    $hasta = '2019-03-02 08:00:00';
+                break;
+                case 8:
+                    $desde = '2019-03-02 20:00:00';
+                    $hasta = '2019-03-03 08:00:00';
+                break;
+                case 9:
+                    $desde = '2019-03-03 20:00:00';
+                    $hasta = '2019-03-04 08:00:00';
+                break;
+                case 10:
+                    $desde = '2019-03-04 20:00:00';
+                    $hasta = '2019-03-05 08:00:00';
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+
+$clausula = 'from carnavals c INNER JOIN encuestadores_carnaval e on c.userid LIKE CONCAT("%",e.codigo) WHERE transporte IS NOT NULL and (FROM_UNIXTIME(ROUND(timestamp/1000)) BETWEEN "'.$desde.'" AND "'.$hasta.'" )';
+
+// $cantidad = DB::select('SELECT COUNT(*) '.$clausula);
+
+        // $test = DB::select("SELECT id,timestamp, FROM_UNIXTIME(ROUND(timestamp/1000)) AS 'date_formatted' FROM `carnavals` ORDER BY `carnavals`.`id` DESC");;
+$cantidad = DB::select('SELECT COUNT(*) as cantidad from (SELECT c.id as carnaval_id from encuestadores_carnaval e
+INNER JOIN carnavals c
+on c.userid like CONCAT("%",e.codigo)
+where (FROM_UNIXTIME(ROUND(timestamp/1000)) BETWEEN "'.$desde.'" AND "'.$hasta.'" )) as Cantidad
+');
+
+$encuestadores =  DB::select('SELECT nombre, count(*) as cantidad from encuestadores_carnaval e
+INNER JOIN carnavals c
+on c.userid like CONCAT("%",e.codigo)
+where (FROM_UNIXTIME(ROUND(timestamp/1000)) BETWEEN "'.$desde.'" AND "'.$hasta.'" )
+GROUP by nombre
+ ');
+
 
         // Consulta de transporte
-        $transporte = DB::select('SELECT transporte as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where transporte IS NOT NULL GROUP BY transporte ORDER BY y desc');
+$transporte = DB::select('SELECT transporte as label,
+COUNT(*) as y,
+CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*)
+'.$clausula.' )),"%") as indexLabel
+'.$clausula.'  GROUP BY transporte ORDER BY y desc
+');
         $t = [];
         foreach ($transporte as $key => $value)
         {
@@ -116,7 +196,14 @@ class JsonController extends Controller
 
         // consulta de procedencia
         $p = [];
-        $procedencia = DB::select('SELECT procedencia as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where procedencia IS NOT NULL GROUP BY procedencia ORDER BY y desc');
+$clausula = 'from carnavals c INNER JOIN encuestadores_carnaval e on c.userid LIKE CONCAT("%",e.codigo) WHERE procedencia IS NOT NULL and (FROM_UNIXTIME(ROUND(timestamp/1000)) BETWEEN "'.$desde.'" AND "'.$hasta.'" )';
+        // $procedencia = DB::select('SELECT procedencia as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where procedencia IS NOT NULL GROUP BY procedencia ORDER BY y desc');
+        $procedencia = DB::select('SELECT procedencia as label,
+COUNT(*) as y,
+CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*)
+'.$clausula.' )),"%") as indexLabel
+'.$clausula.'  GROUP BY procedencia ORDER BY y desc
+');
          foreach ($procedencia as $key => $value)
         {
 
@@ -124,7 +211,14 @@ class JsonController extends Controller
         }
         // consulta sexo
         $s = [];
-        $sexo = DB::select('SELECT sexo as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where sexo IS NOT NULL GROUP BY sexo ORDER BY y desc');
+        $clausula = 'from carnavals c INNER JOIN encuestadores_carnaval e on c.userid LIKE CONCAT("%",e.codigo) WHERE sexo IS NOT NULL and (FROM_UNIXTIME(ROUND(timestamp/1000)) BETWEEN "'.$desde.'" AND "'.$hasta.'" )';
+        // $sexo = DB::select('SELECT sexo as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where sexo IS NOT NULL GROUP BY sexo ORDER BY y desc');
+         $sexo = DB::select('SELECT sexo as label,
+COUNT(*) as y,
+CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*)
+'.$clausula.' )),"%") as indexLabel
+'.$clausula.'  GROUP BY sexo ORDER BY y desc
+');
          foreach ($sexo as $key => $value)
         {
            if($value->label == 'F')
@@ -139,8 +233,15 @@ class JsonController extends Controller
         }
 
 // lugar_alojamiento
+$clausula = 'from carnavals c INNER JOIN encuestadores_carnaval e on c.userid LIKE CONCAT("%",e.codigo) WHERE lugar_alojamiento IS NOT NULL and (FROM_UNIXTIME(ROUND(timestamp/1000)) BETWEEN "'.$desde.'" AND "'.$hasta.'" )';
         $la = [];
-        $lugar_alojamiento = DB::select('SELECT lugar_alojamiento as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where lugar_alojamiento IS NOT NULL GROUP BY lugar_alojamiento ORDER BY y desc');
+        // $lugar_alojamiento = DB::select('SELECT lugar_alojamiento as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where lugar_alojamiento IS NOT NULL GROUP BY lugar_alojamiento ORDER BY y desc');
+         $lugar_alojamiento = DB::select('SELECT lugar_alojamiento as label,
+COUNT(*) as y,
+CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*)
+'.$clausula.' )),"%") as indexLabel
+'.$clausula.'  GROUP BY lugar_alojamiento ORDER BY y desc
+');
          foreach ($lugar_alojamiento as $key => $value)
         {
 
@@ -148,7 +249,15 @@ class JsonController extends Controller
         }
 // tipoalojamiento
         $ta = [];
-        $tipoalojamiento = DB::select('SELECT tipoalojamiento as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where tipoalojamiento IS NOT NULL GROUP BY tipoalojamiento ORDER BY y desc');
+
+        $clausula = 'from carnavals c INNER JOIN encuestadores_carnaval e on c.userid LIKE CONCAT("%",e.codigo) WHERE tipoalojamiento IS NOT NULL and (FROM_UNIXTIME(ROUND(timestamp/1000)) BETWEEN "'.$desde.'" AND "'.$hasta.'" )';
+        // $tipoalojamiento = DB::select('SELECT tipoalojamiento as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where tipoalojamiento IS NOT NULL GROUP BY tipoalojamiento ORDER BY y desc');
+        $tipoalojamiento = DB::select('SELECT tipoalojamiento as label,
+COUNT(*) as y,
+CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*)
+'.$clausula.' )),"%") as indexLabel
+'.$clausula.'  GROUP BY tipoalojamiento ORDER BY y desc
+');
          foreach ($tipoalojamiento as $key => $value)
         {
 
@@ -157,7 +266,14 @@ class JsonController extends Controller
 // edad
 // viaje
          $vi = [];
-        $viaje = DB::select('SELECT viaje as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where viaje IS NOT NULL  GROUP BY viaje ORDER BY y desc');
+         $clausula = 'from carnavals c INNER JOIN encuestadores_carnaval e on c.userid LIKE CONCAT("%",e.codigo) WHERE viaje IS NOT NULL and (FROM_UNIXTIME(ROUND(timestamp/1000)) BETWEEN "'.$desde.'" AND "'.$hasta.'" )';
+        // $viaje = DB::select('SELECT viaje as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where viaje IS NOT NULL  GROUP BY viaje ORDER BY y desc');
+        $viaje = DB::select('SELECT viaje as label,
+COUNT(*) as y,
+CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*)
+'.$clausula.' )),"%") as indexLabel
+'.$clausula.'  GROUP BY viaje ORDER BY y desc
+');
          foreach ($viaje as $key => $value)
         {
 
@@ -166,7 +282,14 @@ class JsonController extends Controller
 // cantidad_personas
 // informo
          $in = [];
-        $informo = DB::select('SELECT informo as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where informo IS NOT NULL  GROUP BY informo ORDER BY y desc');
+         $clausula = 'from carnavals c INNER JOIN encuestadores_carnaval e on c.userid LIKE CONCAT("%",e.codigo) WHERE informo IS NOT NULL and (FROM_UNIXTIME(ROUND(timestamp/1000)) BETWEEN "'.$desde.'" AND "'.$hasta.'" )';
+        // $informo = DB::select('SELECT informo as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where informo IS NOT NULL  GROUP BY informo ORDER BY y desc');
+        $informo = DB::select('SELECT informo as label,
+COUNT(*) as y,
+CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*)
+'.$clausula.' )),"%") as indexLabel
+'.$clausula.'  GROUP BY informo ORDER BY y desc
+');
          foreach ($informo as $key => $value)
         {
 
@@ -174,7 +297,14 @@ class JsonController extends Controller
         }
 // motivo
          $mo = [];
-        $motivo = DB::select('SELECT motivo as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where motivo IS NOT NULL  GROUP BY motivo ORDER BY y desc');
+         $clausula = 'from carnavals c INNER JOIN encuestadores_carnaval e on c.userid LIKE CONCAT("%",e.codigo) WHERE motivo IS NOT NULL and (FROM_UNIXTIME(ROUND(timestamp/1000)) BETWEEN "'.$desde.'" AND "'.$hasta.'" )';
+        // $motivo = DB::select('SELECT motivo as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where motivo IS NOT NULL  GROUP BY motivo ORDER BY y desc');
+        $motivo = DB::select('SELECT motivo as label,
+COUNT(*) as y,
+CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*)
+'.$clausula.' )),"%") as indexLabel
+'.$clausula.'  GROUP BY motivo ORDER BY y desc
+');
          foreach ($motivo as $key => $value)
         {
 
@@ -186,7 +316,14 @@ class JsonController extends Controller
 // recomendaria
 // gastos
         $gas = [];
-        $gastos = DB::select('SELECT gastos as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where gastos IS NOT NULL  GROUP BY gastos ORDER BY y desc');
+        $clausula = 'from carnavals c INNER JOIN encuestadores_carnaval e on c.userid LIKE CONCAT("%",e.codigo) WHERE gastos IS NOT NULL and (FROM_UNIXTIME(ROUND(timestamp/1000)) BETWEEN "'.$desde.'" AND "'.$hasta.'" )';
+        // $gastos = DB::select('SELECT gastos as label, COUNT(*) as y, CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) from carnavals)),"%") as indexLabel from carnavals where gastos IS NOT NULL  GROUP BY gastos ORDER BY y desc');
+        $gastos = DB::select('SELECT gastos as label,
+COUNT(*) as y,
+CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*)
+'.$clausula.' )),"%") as indexLabel
+'.$clausula.'  GROUP BY gastos ORDER BY y desc
+');
          foreach ($gastos as $key => $value)
         {
           switch ($value->label) {
@@ -214,19 +351,29 @@ class JsonController extends Controller
 // userid
 // timestamp
 
+
+// print_r($cantidad);
+// return;
+
         return view('carnaval/results')
         ->with('transporte',$t)
         ->with('procedencia',$p)
         ->with('sexo',$s)
-         ->with('lugar_alojamiento',$la)
-          ->with('tipoalojamiento',$ta)
-          ->with('gastos',$gas)
-          ->with('viaje',$vi)
-          ->with('motivo',$mo)
-          ->with('informo',$in);
+        ->with('lugar_alojamiento',$la)
+        ->with('tipoalojamiento',$ta)
+        ->with('gastos',$gas)
+        ->with('viaje',$vi)
+        ->with('motivo',$mo)
+        ->with('informo',$in)
+        ->with('desde',$desde)
+        ->with('hasta',$hasta)
+        ->with('cantidad',$cantidad)
+->with('encuestadores',$encuestadores)
+->with('dia',$dia);
 
     }
 
 
 
 }
+
