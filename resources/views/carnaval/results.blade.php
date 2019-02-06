@@ -51,7 +51,7 @@
 
         <ul class="list-group">
             @foreach ($encuestadores as $encuestador)
-        <li class="list-group-item">{{$encuestador->nombre}} :{{$encuestador->cantidad}}</li>
+        <li class="list-group-item"><strong>{{$encuestador->nombre}}<strong> :{{$encuestador->cantidad}}</li>
     @endforeach
         </ul>
 
