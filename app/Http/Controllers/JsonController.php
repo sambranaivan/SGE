@@ -82,7 +82,7 @@ class JsonController extends Controller
 		$carnaval->lugar_alojamiento = $data->alojamiento;
 		$carnaval->tipoalojamiento = $data->tipoalojamiento;
 		$carnaval->primeravez = $data->primeravez;
-		$carnaval->recomendaria = $data->recomendaria;
+		// $carnaval->recomendaria = $data->recomendaria;
 		$carnaval->gastos = $data->gastos;
         $carnaval->userid = $data->userid;
         $carnaval->latitud = $data->latitud;
@@ -102,6 +102,10 @@ class JsonController extends Controller
     public function report($dia){
 
         switch ($dia) {
+                case 99:
+                    $desde = '2018-02-08 20:00:00';
+                    $hasta = '2020-03-05 08:00:00';
+                    break;
                case 11:
                     $desde = '2019-02-08 20:00:00';
                     $hasta = '2019-03-05 08:00:00';
