@@ -18,6 +18,7 @@
                 <option value="2" @if($dia == 2) selected @endif >Sábado 9</option>
                 <option value="3" @if($dia == 3) selected @endif >Viernes 15</option>
                 <option value="4" @if($dia == 4) selected @endif >Sábado 16</option>
+                <option value="12" @if($dia == 10) selected @endif >Domingo 17</option>
                 <option value="5" @if($dia == 5) selected @endif >Viernes 22</option>
                 <option value="6" @if($dia == 6) selected @endif >Sábado 23</option>
                 <option value="7" @if($dia == 7) selected @endif >Viernes 1</option>

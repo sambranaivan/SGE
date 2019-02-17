@@ -110,6 +110,10 @@ class JsonController extends Controller
                     $desde = '2019-02-08 20:00:00';
                     $hasta = '2019-03-05 08:00:00';
                     break;
+                case 12:
+                    $desde = '2019-02-17 20:00:00';
+                    $hasta = '2019-02-18 08:00:00';
+                break;
                 case 1:
                     $desde = '2019-02-08 20:00:00';
                     $hasta = '2019-02-09 08:00:00';
