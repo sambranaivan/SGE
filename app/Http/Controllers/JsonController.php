@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\json;
 use App\carnaval;
+use App\pesca;
 use DB;
 class JsonController extends Controller
 {
@@ -20,6 +21,15 @@ class JsonController extends Controller
     	// proceso la informacion recibida
 
 
+    }
+
+    public function recievePesca(Request $request){
+        $data = new json;
+    	$data->data = $request->getContent();
+    	$data->save();
+    	// guardo los datos originales
+    	$this->processPesca($data->data);
+    	// proceso la informacion recibida
     }
 
     public function process($data)
@@ -51,6 +61,40 @@ class JsonController extends Controller
 
 
     }
+
+
+    //
+
+ public function processPesca($data)
+    {
+
+    	$json = json_decode($data);
+
+    	foreach ($json as $encuesta) {
+    		///genero hash unico
+    		$hash = $encuesta->userid.$encuesta->timestamp;
+    		///me fijo si existe el hash
+
+    		if( carnaval::where('hash','=',$hash)->exists())
+    			{
+
+    				echo "existe";
+    			}
+    			else
+    			{
+    				echo "no existe";
+    				// no existe creo
+    				$this->registrarPesca($encuesta);
+
+    			}
+
+    		// return;
+
+    	}
+
+
+    }
+
 
     public function registrar($data)
     {
@@ -90,6 +134,58 @@ class JsonController extends Controller
 		$carnaval->timestamp = $data->timestamp;
 		$carnaval->save();
 		echo $carnaval->id;
+
+
+    }
+
+
+     public function registrar_pesca($data)
+    {
+    	$pesca = new pesca;
+    	$hash = $data->userid.$data->timestamp;
+    	$pesca->hash = $hash;
+
+        $pesca->latitud = $pesca->latitud;
+        $pesca->longitud = $data->longitud ;
+        $pesca->userid = $data->userid ;
+        $pesca->timestamp = $data->timestamp ;
+        $pesca->localidad = $data->localidad ;
+        $pesca->concurso = $data->concurso ;
+        $pesca->fecha = $data->fecha ;
+        $pesca->procedencia = $data->procedencia ;
+        $pesca->cuantas_personas = $data->cuantas_personas ;
+        $pesca->tipo_alojamiento = $data->tipo_alojamiento ;
+        $pesca->cuantas_noches = $data->cuantas_noches ;
+        $pesca->gasto_alojamiento = $data->gasto_alojamiento ;
+        $pesca->cuantos_dias = $data->cuantos_dias ;
+        $pesca->cuantas_participo = $data->cuantas_participo ;
+        $pesca->informo = $data->informo ;
+        $pesca->gasto_salida = $data->gasto_salida ;
+        $pesca->uso_guia = $data->uso_guia ;
+        $pesca->participo_pesca = $data->participo_pesca ;
+        $pesca->modalidad_pesca = $data->modalidad_pesca ;
+        $pesca->actividad_cena = $data->actividad_cena ;
+        $pesca->actividad_show = $data->actividad_show ;
+        $pesca->actividad_exposicion = $data->actividad_exposicion ;
+        $pesca->actividad_feria = $data->actividad_feria ;
+        $pesca->volveria = $data->volveria ;
+        $pesca->gastos_alimentos = $data->gastos_alimentos ;
+        $pesca->gastos_artesanias = $data->gastos_artesanias ;
+        $pesca->gastos_transporte = $data->gastos_transporte ;
+        $pesca->volveria_visitar = $data->volveria_visitar ;
+        $pesca->volveria_porque = $data->volveria_porque ;
+        $pesca->evalua_alojamiento = $data->evalua_alojamiento ;
+        $pesca->evalua_gastronomia = $data->evalua_gastronomia ;
+        $pesca->evalua_info_turistica = $data->evalua_info_turistica ;
+        $pesca->evalua_excursiones = $data->evalua_excursiones ;
+        $pesca->evalua_limpieza = $data->evalua_limpieza ;
+        $pesca->evalua_seguridad = $data->evalua_seguridad ;
+        $pesca->evalua_naturaleza = $data->evalua_naturaleza ;
+        $pesca->evalua_accesso = $data->evalua_accesso ;
+        $pesca->timestamp = $data->timestamp ;
+
+		$pesca->save();
+		echo $pesca->id;
 
 
     }

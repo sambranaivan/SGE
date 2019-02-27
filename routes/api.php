@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/carnaval/send', 'JsonController@recieve');
+Route::post('/pesca/send', 'JsonController@recievePesca');
 
 // graficos
 
