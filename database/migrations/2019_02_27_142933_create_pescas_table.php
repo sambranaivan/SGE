@@ -19,7 +19,6 @@ class CreatePescasTable extends Migration
             $table->string('latitud')->nullable();
             $table->string('longitud')->nullable();
             $table->string('userid')->nullable();
-            $table->string('timestamp')->nullable();
             $table->string('localidad')->nullable();
             $table->string('concurso')->nullable();
             $table->string('fecha')->nullable();
