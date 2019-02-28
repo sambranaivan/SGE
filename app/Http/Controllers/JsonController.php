@@ -145,7 +145,7 @@ class JsonController extends Controller
     	$hash = $data->userid.$data->timestamp;
     	$pesca->hash = $hash;
 
-        $pesca->latitud = $pesca->latitud;
+        $pesca->latitud = $data->latitud;
         $pesca->longitud = $data->longitud ;
         $pesca->userid = $data->userid ;
         $pesca->timestamp = $data->timestamp ;
