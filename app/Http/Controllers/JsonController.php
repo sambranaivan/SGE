@@ -70,12 +70,12 @@ class JsonController extends Controller
 
     	$json = json_decode($data);
 
-    	foreach ($json as $encuesta) {
+    	foreach ($json as $pesca) {
     		///genero hash unico
-    		$hash = $encuesta->userid.$encuesta->timestamp;
+    		$hash = $pesca->userid.$pesca->timestamp;
     		///me fijo si existe el hash
 
-    		if( carnaval::where('hash','=',$hash)->exists())
+    		if( pesca::where('hash','=',$hash)->exists())
     			{
 
     				echo "existe";
@@ -84,7 +84,7 @@ class JsonController extends Controller
     			{
     				echo "no existe";
     				// no existe creo
-    				$this->registrarPesca($encuesta);
+    				$this->registrarPesca($pesca);
 
     			}
 
