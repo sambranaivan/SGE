@@ -139,7 +139,7 @@ class JsonController extends Controller
     }
 
 
-     public function registrar_pesca($data)
+     public function registrarPesca($data)
     {
     	$pesca = new pesca;
     	$hash = $data->userid.$data->timestamp;
