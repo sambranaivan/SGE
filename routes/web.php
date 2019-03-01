@@ -108,7 +108,10 @@ Route::get('getHotel/{id}','HotelController@getHotel');
 
 Route::get('test/reservas','EohController@reporteReservas');
 
+Route::get('pesca','PescaController@reporte');
 
 //
 //
 //
+
+

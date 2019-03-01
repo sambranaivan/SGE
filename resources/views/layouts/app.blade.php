@@ -52,6 +52,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/carnaval">Carnavales Oficiales</a>
                             </li>
+                             <li class="nav-item">
+                                <a class="nav-link" href="/pesca">CONCURSO DE PESCA 2019</a>
+                            </li>
 
 
 

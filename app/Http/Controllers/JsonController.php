@@ -429,29 +429,29 @@ CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*)
 '.$clausula.'  GROUP BY gastos ORDER BY y desc
 ');
          foreach ($gastos as $key => $value)
-        {
-          switch ($value->label) {
-              case 'a':
-                  $value->label = "Menos de $500";
-                  break;
-              case 'b':
-                  $value->label = "de $500 a $1000";
-                  break;
-            case 'c':
-                  $value->label = "entre $1000 y $3000";
-                  break;
-            case 'd':
-                  $value->label = "Mas de $3000";
-                  break;
-                  case 'e':
-                  $value->label = "NS/NC";
-                  break;
-              default:
-                  # code...
-                  break;
-          }
-            $gas[] = (array) $value;
-        }
+                {
+                switch ($value->label) {
+                    case 'a':
+                        $value->label = "Menos de $500";
+                        break;
+                    case 'b':
+                        $value->label = "de $500 a $1000";
+                        break;
+                    case 'c':
+                        $value->label = "entre $1000 y $3000";
+                        break;
+                    case 'd':
+                        $value->label = "Mas de $3000";
+                        break;
+                        case 'e':
+                        $value->label = "NS/NC";
+                        break;
+                    default:
+                        # code...
+                        break;
+                        }
+                    $gas[] = (array) $value;
+                 }
 // userid
 // timestamp
 
