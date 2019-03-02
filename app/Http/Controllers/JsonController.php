@@ -127,7 +127,24 @@ class JsonController extends Controller
 		$carnaval->tipoalojamiento = $data->tipoalojamiento;
 		$carnaval->primeravez = $data->primeravez;
 		// $carnaval->recomendaria = $data->recomendaria;
-		$carnaval->gastos = $data->gastos;
+		if ($request->has('gastos')) 
+        {
+            $carnaval->gastos = $data->gastos;
+        }
+        else
+        {
+            $carnaval->gastos = "-";
+            
+        }
+        if ($request->has('opinion')) 
+        {
+            $carnaval->opinion = $data->opinion;
+        }
+        else
+        {
+            $carnaval->opinion = "-";
+            
+        }
         $carnaval->userid = $data->userid;
         $carnaval->latitud = $data->latitud;
         $carnaval->longitud = $data->longitud;
