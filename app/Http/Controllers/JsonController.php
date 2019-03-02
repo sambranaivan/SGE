@@ -130,8 +130,15 @@ class JsonController extends Controller
 		
             $carnaval->gastos = $data->gastos;
       
-            $carnaval->opinion = $data->opinion;
-
+            
+            if(isset($data->opinion))
+            {
+                $carnaval->opinion = $data->opinion;    
+            }
+            else
+            {
+             $carnaval->opinion = null;       
+            }
         $carnaval->userid = $data->userid;
         $carnaval->latitud = $data->latitud;
         $carnaval->longitud = $data->longitud;
